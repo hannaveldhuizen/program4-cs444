@@ -40,13 +40,13 @@ public class SupportStaffController {
     }
 
     @PostMapping("/addStaff")
-    public String StaffSubmit(@ModelAttribute SupportStaff Staff) {
+    public String StaffSubmit(@ModelAttribute SupportStaff staff) {
         jdbcTemplate.update("insert into lshoemake.SupportStaff values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-        		Staff.getEID(), Staff.getLastName(), Staff.getFirstName(),
-        		Staff.getDOB(), Staff.getSalary() == 0 ? "NULL" : Staff.getSalary(), 
-        		Staff.getDeptID() == 0 ? "NULL" : Staff.getDeptID(),
-        		Staff.getOfficeNumber() == 0 ? "NULL" : Staff.getOfficeNumber(),
-        		Staff.getJobTitle(), Staff.getGender(), Staff.getContactNumber());
+        		staff.getEID(), staff.getLastName(), staff.getFirstName(),
+        		staff.getDOB(), staff.getSalary() == 0 ? "NULL" : staff.getSalary(), 
+        		staff.getDeptID() == 0 ? "NULL" : staff.getDeptID(),
+        		staff.getOfficeNumber() == 0 ? "NULL" : staff.getOfficeNumber(),
+        		staff.getJobTitle(), staff.getGender(), staff.getContactNumber());
 
         return "resultStaff";
     }
@@ -58,9 +58,9 @@ public class SupportStaffController {
     }
 
     @PostMapping("/deleteStaff") // FIX
-    public String StaffDelete(@ModelAttribute SupportStaff Staff) {
-      jdbcTemplate.update("delete from lshoemake.SupportStaff where first_name = ? and last_name = ?", 
-    		  Staff.getFirstName(), Staff.getLastName());
+    public String StaffDelete(@ModelAttribute SupportStaff staff) {
+      jdbcTemplate.update("delete from lshoemake.SupportStaff where firstname = ? and lastname = ?", 
+    		  staff.getFirstName(), staff.getLastName());
 
       return "deleteStaffResult";
     }
@@ -72,8 +72,8 @@ public class SupportStaffController {
         "select * from lshoemake.staff",
         new RowMapper<String>() {
             public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-                String first_name = rs.getString("first_name");
-                String last_name = rs.getString("last_name");
+                String first_name = rs.getString("firstname");
+                String last_name = rs.getString("lastname");
                 return (first_name + " " + last_name);
             }
         });

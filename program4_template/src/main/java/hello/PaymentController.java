@@ -40,11 +40,11 @@ public class PaymentController {
     }
 
     @PostMapping("/addPayment")
-    public String PaymentSubmit(@ModelAttribute Payment Payment) {
+    public String PaymentSubmit(@ModelAttribute Payment payment) {
         jdbcTemplate.update("insert into lshoemake.Payment values (?, ?, ?, ?, ?, ?, ?)", 
-        		Payment.getPayID(), Payment.getPID(), Payment.getAmountDue(),
-        		Payment.getDueDate(), Payment.getStatus(), Payment.getPaymentDate(),
-        		Payment.getEID());
+        		payment.getPayID(), payment.getPID(), payment.getAmountDue(),
+        		payment.getDueDate(), payment.getStatus(), payment.getPaymentDate(),
+        		payment.getEID());
 
         return "resultPayment";
     }
@@ -56,11 +56,11 @@ public class PaymentController {
     }
 
     @PostMapping("/updatePayment") //FIX
-    public String PaymentUpdate(@ModelAttribute Payment Payment) {
-        jdbcTemplate.update("update lshoemake.Payment set attr = val, attr2 = val2 where COND)", 
+    public String PaymentUpdate(@ModelAttribute Payment payment) {
+        jdbcTemplate.update("update lshoemake.Payment set attr = val, attr2 = val2 where COND)" 
         		);
 
-        return "updatedPayment";
+        return "updatePaymentResult";
     }
     
 

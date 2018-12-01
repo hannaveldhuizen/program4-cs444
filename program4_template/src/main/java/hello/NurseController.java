@@ -40,11 +40,11 @@ public class NurseController {
     }
 
     @PostMapping("/addNurse")
-    public String NurseSubmit(@ModelAttribute Nurse Nurse) {
+    public String NurseSubmit(@ModelAttribute Nurse nurse) {
         jdbcTemplate.update("insert into lshoemake.nurse values (?, ?, ?, ?, ?, ?)", 
-        		Nurse.getNID(), Nurse.getLastName(), Nurse.getFirstName(), Nurse.getDOB(), 
-        		Nurse.getDeptID() == 0 ? "NULL" : Nurse.getDeptID(), 
-        		Nurse.getRoomNumber() == 0 ? "NULL" : Nurse.getRoomNumber());
+        		nurse.getNID(), nurse.getLastName(), nurse.getFirstName(), nurse.getDOB(), 
+        		nurse.getDeptID() == 0 ? "NULL" : nurse.getDeptID(), 
+        		nurse.getRoomNumber() == 0 ? "NULL" : nurse.getRoomNumber());
         return "resultNurse";
     }
 
@@ -55,9 +55,9 @@ public class NurseController {
     }
 
     @PostMapping("/deleteNurse") // FIX
-    public String NurseDelete(@ModelAttribute Nurse Nurse) {
-      jdbcTemplate.update("delete from lshoemake.nurse where first_name = ? and last_name = ?", 
-    		  Nurse.getFirstName(), Nurse.getLastName());
+    public String NurseDelete(@ModelAttribute Nurse nurse) {
+      jdbcTemplate.update("delete from lshoemake.nurse where firstname = ? and lastname = ?", 
+    		  nurse.getFirstName(), nurse.getLastName());
 
       return "deleteNurseResult";
     }

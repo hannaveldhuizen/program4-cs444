@@ -56,11 +56,25 @@ public class DoctorController {
     }
 
     @PostMapping("/deleteDoctor") // FIX
-    public String DoctorDelete(@ModelAttribute Doctor Doctor) {
+    public String DoctorDelete(@ModelAttribute Doctor doctor) {
       jdbcTemplate.update("delete from lshoemake.doctor where firstname = ? and lastname = ?", 
-    		  Doctor.getFirstName(), Doctor.getLastName());
+    		  doctor.getFirstName(), doctor.getLastName());
 
       return "deleteDoctorResult";
+    }
+    
+    @GetMapping("/updateDoctor")
+    public String DoctorFormUpdate(Model model) {
+        model.addAttribute("payment", new Doctor());
+        return "updateDoctor";
+    }
+
+    @PostMapping("/updateDoctor") //FIX
+    public String DoctorUpdate(@ModelAttribute Doctor doctor) {
+        jdbcTemplate.update("update lshoemake.Doctor set attr = val, attr2 = val2 where COND)" 
+        		);
+
+        return "updateDoctorResult";
     }
 
     // FIX

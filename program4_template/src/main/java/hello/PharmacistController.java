@@ -40,12 +40,12 @@ public class PharmacistController {
     }
 
     @PostMapping("/addPharmacist")
-    public String PharmacistSubmit(@ModelAttribute Pharmacist Pharmacist) {
+    public String PharmacistSubmit(@ModelAttribute Pharmacist pharmacist) {
         jdbcTemplate.update("insert into lshoemake.pharmacist values (?, ?, ?, ?, ?, ?)", 
-        		Pharmacist.getPhID(), Pharmacist.getLastName(), 
-        		Pharmacist.getFirstName(), Pharmacist.getDOB(), 
-        		Pharmacist.getDeptID() == 0 ? "NULL" : Pharmacist.getDeptID(), 
-        		Pharmacist.getOfficeNumber() == 0 ? "NULL" : Pharmacist.getOfficeNumber());
+        		pharmacist.getPhID(), pharmacist.getLastName(), 
+        		pharmacist.getFirstName(), pharmacist.getDOB(), 
+        		pharmacist.getDeptID() == 0 ? "NULL" : pharmacist.getDeptID(), 
+        		pharmacist.getOfficeNumber() == 0 ? "NULL" : pharmacist.getOfficeNumber());
 
         return "resultPharmacist";
     }
@@ -57,9 +57,9 @@ public class PharmacistController {
     }
 
     @PostMapping("/deletePharmacist") // FIX
-    public String PharmacistDelete(@ModelAttribute Pharmacist Pharmacist) {
-      jdbcTemplate.update("delete from lshoemake.pharmacist where first_name = ? and last_name = ?", 
-    		  Pharmacist.getFirstName(), Pharmacist.getLastName());
+    public String PharmacistDelete(@ModelAttribute Pharmacist pharmacist) {
+      jdbcTemplate.update("delete from lshoemake.pharmacist where firstname = ? and lastname = ?", 
+    		  pharmacist.getFirstName(), pharmacist.getLastName());
 
       return "deletePharmacistResult";
     }
