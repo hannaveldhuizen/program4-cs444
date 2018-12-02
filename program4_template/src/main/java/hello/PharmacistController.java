@@ -56,10 +56,11 @@ public class PharmacistController {
         return "deletePharmacist";
     }
 
-    @PostMapping("/deletePharmacist") // FIX
+    @PostMapping("/deletePharmacist")
     public String PharmacistDelete(@ModelAttribute Pharmacist pharmacist) {
-      jdbcTemplate.update("delete from lshoemake.pharmacist where firstname = ? and lastname = ?", 
-    		  pharmacist.getFirstName(), pharmacist.getLastName());
+      jdbcTemplate.update("delete from lshoemake.pharmacist "
+      		+ "where phid = ? and firstname = ? and lastname = ?", 
+    		  pharmacist.getPhID(), pharmacist.getFirstName(), pharmacist.getLastName());
 
       return "deletePharmacistResult";
     }

@@ -41,11 +41,10 @@ public class SupportStaffController {
 
     @PostMapping("/addStaff")
     public String StaffSubmit(@ModelAttribute SupportStaff staff) {
-        jdbcTemplate.update("insert into lshoemake.SupportStaff values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+        jdbcTemplate.update("insert into lshoemake.SupportStaff values (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
         		staff.getEID(), staff.getLastName(), staff.getFirstName(),
         		staff.getDOB(), staff.getSalary() == 0 ? "NULL" : staff.getSalary(), 
         		staff.getDeptID() == 0 ? "NULL" : staff.getDeptID(),
-        		staff.getOfficeNumber() == 0 ? "NULL" : staff.getOfficeNumber(),
         		staff.getJobTitle(), staff.getGender(), staff.getContactNumber());
 
         return "resultStaff";
@@ -57,10 +56,11 @@ public class SupportStaffController {
         return "deleteStaff";
     }
 
-    @PostMapping("/deleteStaff") // FIX
+    @PostMapping("/deleteStaff")
     public String StaffDelete(@ModelAttribute SupportStaff staff) {
-      jdbcTemplate.update("delete from lshoemake.SupportStaff where firstname = ? and lastname = ?", 
-    		  staff.getFirstName(), staff.getLastName());
+      jdbcTemplate.update("delete from lshoemake.SupportStaff "
+      		+ "where eid = ? and firstname = ? and lastname = ?", 
+    		  staff.getEID(), staff.getFirstName(), staff.getLastName());
 
       return "deleteStaffResult";
     }

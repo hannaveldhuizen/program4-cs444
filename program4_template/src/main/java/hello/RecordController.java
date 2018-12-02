@@ -41,8 +41,7 @@ public class RecordController {
 
     @PostMapping("/addRecord")
     public String RecordSubmit(@ModelAttribute Record record) {
-        jdbcTemplate.update("insert into lshoemake.Record values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-        		record.getPID(), 
+        jdbcTemplate.update("insert into lshoemake.Record values (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
         		record.getRecordNum() == 0 ? "NULL" : record.getRecordNum(), 
         		record.getApptNum(), record.getInitialHospDate(), 
         		record.getExpDichargeDate(), record.getActualDischargeDate(), 

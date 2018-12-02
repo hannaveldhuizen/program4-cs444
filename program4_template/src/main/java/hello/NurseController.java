@@ -54,10 +54,11 @@ public class NurseController {
         return "deleteNurse";
     }
 
-    @PostMapping("/deleteNurse") // FIX
+    @PostMapping("/deleteNurse")
     public String NurseDelete(@ModelAttribute Nurse nurse) {
-      jdbcTemplate.update("delete from lshoemake.nurse where firstname = ? and lastname = ?", 
-    		  nurse.getFirstName(), nurse.getLastName());
+      jdbcTemplate.update("delete from lshoemake.nurse where "
+      		+ "nid = ? and firstname = ? and lastname = ?", 
+    		  nurse.getNID(), nurse.getFirstName(), nurse.getLastName());
 
       return "deleteNurseResult";
     }
