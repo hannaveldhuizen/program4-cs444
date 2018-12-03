@@ -1,5 +1,6 @@
 package hello;
-
+import java.util.List;
+import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,10 +42,18 @@ public class DepartmentController {
 
     @PostMapping("/updateDepartment") //FIX
     public String DepartmentUpdate(@ModelAttribute Department department) {
-        jdbcTemplate.update("update lshoemake.department set attr = val, attr2 = val2 where COND)", 
-        		department.getDeptID(), department.getDeptName(),
-        		department.getBuildingName(), department.getOfficeNum());
 
+    	List<String> strs = new ArrayList<String>();
+
+    	if (department.getDeptName() != null)
+    		strs.add("deptname = " + department.getDeptName());
+    	if (department.getBuildingName() != null)
+    		strs.add("buildingname = " + department.getBuildingName());
+    	if (department.getOfficeNum() != 0)
+    		strs.add("officenum = " + department.getOfficeNum());
+    	
+        jdbcTemplate.update("update lshoemake.department set ? where ?",
+        		String.join(", ", strs));
         return "updateDepartmentResult";
     }
 

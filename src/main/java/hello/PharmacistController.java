@@ -41,10 +41,6 @@ public class PharmacistController {
 
     @PostMapping("/addPharmacist")
     public String PharmacistSubmit(@ModelAttribute Pharmacist pharmacist) {
-    	// check if user left these attrs blank
-    	if (pharmacist.getPhID() == 0 || pharmacist.getFirstName() == null ||
-    		pharmacist.getLastName() == null || pharmacist.getDOB() == null)
-    		return null; 
     	
         jdbcTemplate.update("insert into lshoemake.pharmacist values (?, ?, ?, ?, ?, ?)", 
         		pharmacist.getPhID(), pharmacist.getLastName(), 
@@ -97,9 +93,7 @@ public class PharmacistController {
     	if (pharmacist.getOfficeNumber() != 0)
     		strs.add("officenum = " + pharmacist.getOfficeNumber());
     		
-        jdbcTemplate.update("update lshoemake.pharmacist "
-        		+ "set ? "
-        		+ "where ? ? ? ? ? ? ?)",  
+        jdbcTemplate.update("update lshoemake.pharmacist set ? where ?",  
         		String.join(", ", strs));
 
         return "updatePharmacistResult";

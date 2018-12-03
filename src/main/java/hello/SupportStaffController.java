@@ -42,11 +42,6 @@ public class SupportStaffController {
 
     @PostMapping("/addStaff")
     public String StaffSubmit(@ModelAttribute SupportStaff staff) {
-    	// check if user left these attrs blank
-    	if (staff.getEID() == 0 || staff.getFirstName() == null ||
-    		staff.getLastName() == null || staff.getDOB() == null)
-    		return null; 
-    	
         jdbcTemplate.update("insert into lshoemake.SupportStaff values (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
         		staff.getEID(), staff.getLastName(), staff.getFirstName(),
         		staff.getDOB(), staff.getSalary() == 0 ? "NULL" : staff.getSalary(), 
@@ -105,9 +100,7 @@ public class SupportStaffController {
     	if (staff.getContactNumber() != null)
     		strs.add("contactnum = " + staff.getContactNumber());
     		
-        jdbcTemplate.update("update lshoemake.supportstaff "
-        		+ "set ? "
-        		+ "where ? ? ? ? ? ? ?)",  
+        jdbcTemplate.update("update lshoemake.supportstaff set ? where ?",  
         		String.join(", ", strs));
 
         return "updateStaffResult";

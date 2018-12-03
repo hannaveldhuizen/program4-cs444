@@ -37,10 +37,6 @@ public class DoctorController {
 
     @PostMapping("/addDoctor")
     public String DoctorSubmit(@ModelAttribute Doctor doctor) {
-    	// check if user left these attrs blank
-    	if (doctor.getDID() == 0 || doctor.getFirstName() == null ||
-    		doctor.getLastName() == null || doctor.getDOB() == null)
-    		return null; 
     	
         jdbcTemplate.update("insert into lshoemake.doctor values (?, ?, ?, ?, ?, ?, ?)", 
         		doctor.getDID(), doctor.getLastName(), doctor.getFirstName(),
@@ -94,9 +90,7 @@ public class DoctorController {
     	if (doctor.getOfficeNumber() != 0)
     		strs.add("officenum = " + doctor.getOfficeNumber());
     		
-        jdbcTemplate.update("update lshoemake.Doctor "
-        		+ "set ? "
-        		+ "where ? ? ? ? ? ? ?)",  
+        jdbcTemplate.update("update lshoemake.doctor set ? where ?",  
         		String.join(", ", strs));
 
         return "updateDoctorResult";

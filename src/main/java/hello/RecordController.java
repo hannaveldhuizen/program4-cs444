@@ -41,6 +41,7 @@ public class RecordController {
 
     @PostMapping("/addRecord")
     public String RecordSubmit(@ModelAttribute Record record) {
+    	
         jdbcTemplate.update("insert into lshoemake.Record values (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
         		record.getRecordNum() == 0 ? "NULL" : record.getRecordNum(), 
         		record.getApptNum(), record.getInitialHospDate(), 
@@ -60,26 +61,29 @@ public class RecordController {
 
     @PostMapping("/updateRecord") //FIX
     public String RecordUpdate(@ModelAttribute Record record) {
-        jdbcTemplate.update("update lshoemake.record set attr = ?, attr2 = ? where COND)", 
-        		record.getApptNum());
+        
+        List<String> strs = new ArrayList<String>();
+        
+    	if (record.getRecordNum() != 0)
+    		strs.add("recordnum = " + record.getRecordNum());
+    	if (record.getExpDischargeDate() != null)
+    		strs.add("expDischargeDate = " + record.getExpDischargeDate());
+    	if (record.getActualDischargeDate() != null)
+    		strs.add("actualDischargeDate = " + record.getActualDischargeDate());
+    	if (record.getTreatmentMethod() != 0)
+    		strs.add("treatmentMethod = " + record.getTreatmentMethod());
+    	if (record.getHospRoom() != 0)
+    		strs.add("hosproom = " + record.getHospRoom());
+    	if (record.getDid() != 0)
+    		strs.add("did = " + record.getDID());
+ 
+    	
+        jdbcTemplate.update("update lshoemake.record set ? where ?", 
+        		String.join(", ", strs));
+        
+        
 
         return "updateRecordResult";
     }
-
-//    // FIX
-//    @GetMapping("/queryResults")
-//    public String queryResults(Model model) {
-//      List<String> allNames = this.jdbcTemplate.query(
-//        "select * from lshoemake.record",
-//        new RowMapper<String>() {
-//            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-//                String first_name = rs.getString("first_name");
-//                String last_name = rs.getString("last_name");
-//                return (first_name + " " + last_name);
-//            }
-//        });
-//        model.addAttribute("names", allNames);
-//        return "/queryResults";
-//    }
 
 }

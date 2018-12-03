@@ -42,10 +42,6 @@ public class NurseController {
 
     @PostMapping("/addNurse")
     public String NurseSubmit(@ModelAttribute Nurse nurse) {
-    	// check if user left these attrs blank
-    	if (nurse.getNID() == 0 || nurse.getFirstName() == null ||
-    		nurse.getLastName() == null || nurse.getDOB() == null)
-    		return null; 
     	
         jdbcTemplate.update("insert into lshoemake.nurse values (?, ?, ?, ?, ?, ?)", 
         		nurse.getNID(), nurse.getLastName(), nurse.getFirstName(), nurse.getDOB(), 
@@ -96,9 +92,7 @@ public class NurseController {
     	if (nurse.getRoomNumber() != 0)
     		strs.add("officenum = " + nurse.getRoomNumber());
     		
-        jdbcTemplate.update("update lshoemake.nurse "
-        		+ "set ? "
-        		+ "where ? ? ? ? ? ? ?)",  
+        jdbcTemplate.update("update lshoemake.nurse set ? where ?",  
         		String.join(", ", strs));
 
         return "updateNurseResult";
