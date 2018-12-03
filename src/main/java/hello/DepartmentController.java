@@ -40,12 +40,12 @@ public class DepartmentController {
     }
 
     @PostMapping("/updateDepartment") //FIX
-    public String DepartmentUpdate(@ModelAttribute Department Department) {
-        jdbcTemplate.update("update lshoemake.Department set attr = val, attr2 = val2 where COND)", 
-        		Department.getDeptID(), Department.getDeptName(),
-        		Department.getBuildingName(), Department.getOfficeNum());
+    public String DepartmentUpdate(@ModelAttribute Department department) {
+        jdbcTemplate.update("update lshoemake.department set attr = val, attr2 = val2 where COND)", 
+        		department.getDeptID(), department.getDeptName(),
+        		department.getBuildingName(), department.getOfficeNum());
 
-        return "updatedDepartment";
+        return "updateDepartmentResult";
     }
 
     // FIX

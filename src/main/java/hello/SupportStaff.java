@@ -7,7 +7,6 @@ public class SupportStaff {
 	private String DOB;
 	private int salary;
 	private int deptID;
-	private int officeNumber;
 	private String jobTitle;
 	private String gender;
 	private String contactNumber;
@@ -46,12 +45,6 @@ public class SupportStaff {
 	}
 	public void setDeptID(int deptID) {
 		this.deptID = deptID;
-	}
-	public int getOfficeNumber() {
-		return officeNumber;
-	}
-	public void setOfficeNumber(int officeNumber) {
-		this.officeNumber = officeNumber;
 	}
 	public String getJobTitle() {
 		return jobTitle;

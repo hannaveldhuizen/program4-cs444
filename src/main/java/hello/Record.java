@@ -2,7 +2,6 @@ package hello;
 
 public class Record {
 
-	private int PID;
 	private int recordNum;
 	private int apptNum;
 	private String initialHospDate;
@@ -66,11 +65,5 @@ public class Record {
 	}
 	public void setDID(int dID) {
 		DID = dID;
-	}
-	public int getPID() {
-		return PID;
-	}
-	public void setPID(int pID) {
-		PID = pID;
 	}
 }

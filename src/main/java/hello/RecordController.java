@@ -40,15 +40,14 @@ public class RecordController {
     }
 
     @PostMapping("/addRecord")
-    public String RecordSubmit(@ModelAttribute Record Record) {
-        jdbcTemplate.update("insert into lshoemake.SupportRecord values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-        		Record.getPID(), 
-        		Record.getRecordNum() == 0 ? "NULL" : Record.getRecordNum(), 
-        		Record.getApptNum(), Record.getInitialHospDate(), 
-        		Record.getExpDichargeDate(), Record.getActualDischargeDate(), 
-        		Record.getReason(), Record.getTreatmentMethod(), 
-        		Record.getHospRoom() == 0 ? "NULL" : Record.getHospRoom(),
-        		Record.getDID() == 0 ? "NULL" : Record.getDID());
+    public String RecordSubmit(@ModelAttribute Record record) {
+        jdbcTemplate.update("insert into lshoemake.Record values (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+        		record.getRecordNum() == 0 ? "NULL" : record.getRecordNum(), 
+        		record.getApptNum(), record.getInitialHospDate(), 
+        		record.getExpDichargeDate(), record.getActualDischargeDate(), 
+        		record.getReason(), record.getTreatmentMethod(), 
+        		record.getHospRoom() == 0 ? "NULL" : record.getHospRoom(),
+        		record.getDID() == 0 ? "NULL" : record.getDID());
 
         return "resultRecord";
     }
@@ -60,11 +59,11 @@ public class RecordController {
     }
 
     @PostMapping("/updateRecord") //FIX
-    public String RecordUpdate(@ModelAttribute Record Record) {
-        jdbcTemplate.update("update lshoemake.Record set attr = ?, attr2 = ? where COND)", 
-        		Record.getApptNum());
+    public String RecordUpdate(@ModelAttribute Record record) {
+        jdbcTemplate.update("update lshoemake.record set attr = ?, attr2 = ? where COND)", 
+        		record.getApptNum());
 
-        return "updatedRecord";
+        return "updateRecordResult";
     }
 
 //    // FIX

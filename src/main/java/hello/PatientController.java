@@ -40,11 +40,11 @@ public class PatientController {
     }
 
     @PostMapping("/addPatient")
-    public String PatientSubmit(@ModelAttribute Patient Patient) {
+    public String PatientSubmit(@ModelAttribute Patient patient) {
         jdbcTemplate.update("insert into lshoemake.patient values (?, ?, ?, ?, ?, ?, ?)", 
-        	Patient.getPID(), Patient.getLastName(), Patient.getFirstName(),
-        	Patient.getGender(), Patient.getDOB(), Patient.getAddress(),
-        	Patient.getContactNumber());
+        	patient.getPID(), patient.getLastName(), patient.getFirstName(),
+        	patient.getGender(), patient.getDOB(), patient.getAddress(),
+        	patient.getContactNumber());
 
         return "resultPatient";
     }
@@ -55,10 +55,11 @@ public class PatientController {
         return "deletePatient";
     }
 
-    @PostMapping("/deletePatient") // FIX
-    public String PatientDelete(@ModelAttribute Patient Patient) {
-      jdbcTemplate.update("delete from lshoemake.patient where first_name = ? and last_name = ?", 
-    		  Patient.getFirstName(), Patient.getLastName());
+    @PostMapping("/deletePatient")
+    public String PatientDelete(@ModelAttribute Patient patient) {
+      jdbcTemplate.update("delete from lshoemake.patient "
+      		+ "where pid = ? and firstname = ? and lastname = ?", 
+    		  patient.getPID(), patient.getFirstName(), patient.getLastName());
 
       return "deletePatientResult";
     }
