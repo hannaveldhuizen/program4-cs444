@@ -1,5 +1,5 @@
 package hello;
-
+import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
+import java.util.List;
 @Controller("/pharmacist")
 public class PharmacistController {
 
@@ -41,6 +41,7 @@ public class PharmacistController {
 
     @PostMapping("/addPharmacist")
     public String PharmacistSubmit(@ModelAttribute Pharmacist pharmacist) {
+    	
         jdbcTemplate.update("insert into lshoemake.pharmacist values (?, ?, ?, ?, ?, ?)", 
         		pharmacist.getPhID(), pharmacist.getLastName(), 
         		pharmacist.getFirstName(), pharmacist.getDOB(), 
@@ -58,11 +59,44 @@ public class PharmacistController {
 
     @PostMapping("/deletePharmacist")
     public String PharmacistDelete(@ModelAttribute Pharmacist pharmacist) {
-      jdbcTemplate.update("delete from lshoemake.pharmacist "
-      		+ "where phid = ? and firstname = ? and lastname = ?", 
-    		  pharmacist.getPhID(), pharmacist.getFirstName(), pharmacist.getLastName());
+    	List<String> strs = new ArrayList<String>();
+    	
+    	if (pharmacist.getPhID() != 0)
+    		strs.add("phid = " + pharmacist.getPhID());
+    	if (pharmacist.getLastName() != null)
+    		strs.add("lastname = " + pharmacist.getLastName());
+    	if (pharmacist.getFirstName() != null)
+    		strs.add("firstname = " + pharmacist.getFirstName());
+    	
+    	jdbcTemplate.update("delete from lshoemake.pharmacist where ?", String.join(" and ", strs));
+
 
       return "deletePharmacistResult";
+    }
+    @GetMapping("/updatePharmacist")
+    public String PharmacistFormUpdate(Model model) {
+        model.addAttribute("pharmacist", new Pharmacist());
+        return "updatePharmacist";
+    }
+
+    @PostMapping("/updatePharmacist")
+    public String PharmacistUpdate(@ModelAttribute Pharmacist pharmacist) {
+    	
+    	List<String> strs = new ArrayList<String>();
+ 
+    	if (pharmacist.getLastName() != null)
+    		strs.add("lastname = " + pharmacist.getLastName());
+    	if (pharmacist.getFirstName() != null)
+    		strs.add("firstname = " + pharmacist.getFirstName());
+    	if (pharmacist.getDeptID() != 0)
+    		strs.add("deptid = " + pharmacist.getDeptID());
+    	if (pharmacist.getOfficeNumber() != 0)
+    		strs.add("officenum = " + pharmacist.getOfficeNumber());
+    		
+        jdbcTemplate.update("update lshoemake.pharmacist set ? where ?",  
+        		String.join(", ", strs));
+
+        return "updatePharmacistResult";
     }
 
 //    // FIX

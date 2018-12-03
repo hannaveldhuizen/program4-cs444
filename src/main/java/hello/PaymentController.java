@@ -1,5 +1,6 @@
 package hello;
-
+import java.util.List;
+import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,8 +58,23 @@ public class PaymentController {
 
     @PostMapping("/updatePayment") //FIX
     public String PaymentUpdate(@ModelAttribute Payment payment) {
-        jdbcTemplate.update("update lshoemake.Payment set attr = val, attr2 = val2 where COND)"
-        		);
+    	List<String> strs = new ArrayList<String>();
+    	if (payment.getPayID() != 0)
+    		strs.add("payid = " + payment.getPayID());
+    	if (payment.getAmountDue() != null)
+    		strs.add("amountdue = " + payment.getAmountDue());
+    	if (payment.getDueDate() != null)
+    		strs.add("duedate = " + payment.getDueDate());
+    	if (payment.getStatus() != null)
+    		strs.add("status = " + payment.getStatus());
+    	if (payment.getPaymentDate() != null)
+    		strs.add("paymentdate = " + payment.getPaymentDate());
+    	if (payment.getEID() != 0)
+    		strs.add("eid = " + payment.getEID());
+    	
+        jdbcTemplate.update("update lshoemake.payment set ? where ?",
+        		String.join(", ", strs));
+        
         return "updatePaymentResult";
     }
     

@@ -1,5 +1,7 @@
 package hello;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -34,12 +36,12 @@ public class DoctorController {
     }
 
     @PostMapping("/addDoctor")
-    public String DoctorSubmit(@ModelAttribute Doctor Doctor) {
-        jdbcTemplate.update("insert into lshoemake.doctor values (?, ?, ?, ?, ?, ?, ?)", 
-        		Doctor.getDID(), Doctor.getLastName(), Doctor.getFirstName(),
-        		Doctor.getDOB(), Doctor.getStatus(), 
-        		Doctor.getDeptID() == 0 ? "NULL" : Doctor.getDeptID(),
-        		Doctor.getOfficeNumber() == 0 ? "NULL" : Doctor.getOfficeNumber());
+    public String DoctorSubmit(@ModelAttribute Doctor doctor) {
+    	jdbcTemplate.update("insert into lshoemake.doctor values (?, ?, ?, ?, ?, ?, ?)", 
+        		doctor.getDID(), doctor.getLastName(), doctor.getFirstName(),
+        		doctor.getDOB(), doctor.getStatus().equals("") ? "NULL" : doctor.getStatus(), 
+        		doctor.getDeptID() == 0 ? "NULL" : doctor.getDeptID(),
+        		doctor.getOfficeNumber() == 0 ? "NULL" : doctor.getOfficeNumber());
         return "resultDoctor";
     }
 
@@ -51,41 +53,46 @@ public class DoctorController {
 
     @PostMapping("/deleteDoctor")
     public String DoctorDelete(@ModelAttribute Doctor doctor) {
-      jdbcTemplate.update("delete from lshoemake.doctor "
-      		+ "where did = ? and firstname = ? and lastname = ?", 
-    		  doctor.getDID(), doctor.getFirstName(), doctor.getLastName());
+    	List<String> strs = new ArrayList<String>();
+    	
+    	if (doctor.getDID() != 0)
+    		strs.add("did = " + doctor.getDID());
+    	if (doctor.getLastName() != null)
+    		strs.add("lastname = " + doctor.getLastName());
+    	if (doctor.getFirstName() != null)
+    		strs.add("firstname = " + doctor.getFirstName());
+    	
+    	jdbcTemplate.update("delete from lshoemake.doctor where ?", String.join(" and ", strs));
 
       return "deleteDoctorResult";
     }
     
     @GetMapping("/updateDoctor")
     public String DoctorFormUpdate(Model model) {
-        model.addAttribute("payment", new Doctor());
+        model.addAttribute("doctor", new Doctor());
         return "updateDoctor";
     }
 
-    @PostMapping("/updateDoctor") //FIX
+    @PostMapping("/updateDoctor")
     public String DoctorUpdate(@ModelAttribute Doctor doctor) {
-        jdbcTemplate.update("update lshoemake.Doctor set attr = val, attr2 = val2 where COND)" 
-        		);
+    	
+    	List<String> strs = new ArrayList<String>();
+ 
+    	if (doctor.getLastName() != null)
+    		strs.add("lastname = " + doctor.getLastName());
+    	if (doctor.getFirstName() != null)
+    		strs.add("firstname = " + doctor.getFirstName());
+    	if (doctor.getStatus() != null)
+    		strs.add("status = " + doctor.getStatus());
+    	if (doctor.getDeptID() != 0)
+    		strs.add("deptid = " + doctor.getDeptID());
+    	if (doctor.getOfficeNumber() != 0)
+    		strs.add("officenum = " + doctor.getOfficeNumber());
+    		
+        jdbcTemplate.update("update lshoemake.doctor set ? where ?",  
+        		String.join(", ", strs));
 
         return "updateDoctorResult";
     }
-
-//    // FIX
-//    @GetMapping("/queryResults")
-//    public String queryResults(Model model) {
-//      List<String> allNames = this.jdbcTemplate.query(
-//        "select * from lshoemake.doctor",
-//        new RowMapper<String>() {
-//            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-//                String first_name = rs.getString("first_name");
-//                String last_name = rs.getString("last_name");
-//                return (first_name + " " + last_name);
-//            }
-//        });
-//        model.addAttribute("names", allNames);
-//        return "/queryResults";
-//    }
 
 }
