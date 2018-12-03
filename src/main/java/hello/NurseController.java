@@ -45,8 +45,8 @@ public class NurseController {
     	
         jdbcTemplate.update("insert into lshoemake.nurse values (?, ?, ?, ?, ?, ?)", 
         		nurse.getNID(), nurse.getLastName(), nurse.getFirstName(), nurse.getDOB(), 
-        		nurse.getDeptID() == 0 ? "NULL" : nurse.getDeptID(), 
-        		nurse.getRoomNumber() == 0 ? "NULL" : nurse.getRoomNumber());
+        		nurse.getDeptID() == 0 ? null : nurse.getDeptID(), 
+        		nurse.getRoomNumber() == 0 ? null : nurse.getRoomNumber());
         return "resultNurse";
     }
 

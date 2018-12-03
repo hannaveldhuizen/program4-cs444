@@ -40,8 +40,8 @@ public class DoctorController {
     	jdbcTemplate.update("insert into lshoemake.doctor values (?, ?, ?, ?, ?, ?, ?)", 
         		doctor.getDID(), doctor.getLastName(), doctor.getFirstName(),
         		doctor.getDOB(), doctor.getStatus().equals("") ? "NULL" : doctor.getStatus(), 
-        		doctor.getDeptID() == 0 ? "NULL" : doctor.getDeptID(),
-        		doctor.getOfficeNumber() == 0 ? "NULL" : doctor.getOfficeNumber());
+        		doctor.getDeptID() == 0 ? null : doctor.getDeptID(),
+        		doctor.getOfficeNumber() == 0 ? null : doctor.getOfficeNumber());
         return "resultDoctor";
     }
 

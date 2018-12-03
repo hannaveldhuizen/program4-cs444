@@ -44,8 +44,8 @@ public class SupportStaffController {
     public String StaffSubmit(@ModelAttribute SupportStaff staff) {
         jdbcTemplate.update("insert into lshoemake.SupportStaff values (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
         		staff.getEID(), staff.getLastName(), staff.getFirstName(),
-        		staff.getDOB(), staff.getSalary() == 0 ? "NULL" : staff.getSalary(), 
-        		staff.getDeptID() == 0 ? "NULL" : staff.getDeptID(),
+        		staff.getDOB(), staff.getSalary() == 0 ? null : staff.getSalary(), 
+        		staff.getDeptID() == 0 ? null : staff.getDeptID(),
         		staff.getJobTitle(), 
         		staff.getGender().equals("") ? "NULL" : staff.getGender(), 
         		staff.getContactNumber());

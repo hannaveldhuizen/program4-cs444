@@ -44,12 +44,12 @@ public class RecordController {
     public String RecordSubmit(@ModelAttribute Record record) {
     	
         jdbcTemplate.update("insert into lshoemake.recordvisit values (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-        		record.getRecordNum() == 0 ? "NULL" : record.getRecordNum(), 
+        		record.getRecordNum() == 0 ? null : record.getRecordNum(), 
         		record.getApptNum(), record.getInitialHospDate(), 
         		record.getExpDischargeDate(), record.getActualDischargeDate(), 
         		record.getReason(), record.getTreatmentMethod(), 
-        		record.getHospRoom() == 0 ? "NULL" : record.getHospRoom(),
-        		record.getDID() == 0 ? "NULL" : record.getDID());
+        		record.getHospRoom() == 0 ? null : record.getHospRoom(),
+        		record.getDID() == 0 ? null : record.getDID());
 
         return "resultRecord";
     }

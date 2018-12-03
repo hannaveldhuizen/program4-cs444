@@ -45,8 +45,8 @@ public class PharmacistController {
         jdbcTemplate.update("insert into lshoemake.pharmacist values (?, ?, ?, ?, ?, ?)", 
         		pharmacist.getPhID(), pharmacist.getLastName(), 
         		pharmacist.getFirstName(), pharmacist.getDOB(), 
-        		pharmacist.getDeptID() == 0 ? "NULL" : pharmacist.getDeptID(), 
-        		pharmacist.getOfficeNumber() == 0 ? "NULL" : pharmacist.getOfficeNumber());
+        		pharmacist.getDeptID() == 0 ? null : pharmacist.getDeptID(), 
+        		pharmacist.getOfficeNumber() == 0 ? null : pharmacist.getOfficeNumber());
 
         return "resultPharmacist";
     }
