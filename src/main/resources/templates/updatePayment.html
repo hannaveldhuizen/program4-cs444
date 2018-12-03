@@ -9,7 +9,9 @@
 <div class="content" style="padding-left:15px">
     <h1>Updating a Payment</h1>
     <form action="#" th:action="@{/updatePayment}" th:object="${payment}" method="put">
+        <p><b>Enter the ID for the record you wish to update: </b></p>
         <p>Payment ID: <input type="text" th:field="*{payID}" required /></p>
+        <p><b>Enter new values below:</b></p>
         <p>PID: <input type="text" th:field="*{PID}"  /></p>
         <p>Amount Due: <input type="text" th:field="*{amountDue}" /></p>
         <p>Due Date: <input type="date" th:field="*{dueDate}" /></p>
