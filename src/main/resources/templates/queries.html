@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="content">
+    <h1 style="padding-top: 15px; ">Queries</h1>
+    <h3>Query #1: Lookup Patient Record</h3>
+    <form action="#" th:action="@{/getPatient}" th:object="${patient}" method="get"  style="padding-left: 10px;">
+    <p>First Name: <input type="text" th:field="*{firstName}" required /></p>
+    <p>Last Name: <input type="text" th:field="*{lastName}" required /></p>
+    <p>DOB: <input type="date" th:field="*{DOB}" required /></p>
+    <p><input type="submit" value="Search"></p>
+    </form>
+
+    <h3>Query #2: List Doctors by Department</h3>
+    <form action="#" th:action="@{/getDepartment}" th:object="${department}" method="get"  style="padding-left: 10px;">
+        <p>Department Name: <input type="text" th:field="*{deptName}" required /></p>
+        <p><input type="submit" value="Search"></p>
+    </form>
+
+    <h3>Query #3: List Patients</h3>
+    <p>This query returns patients currently hospitalized and expected to be hospitalized for more than 5 days.</p>
+    <form action="#" th:action="@{/getPatient}" th:object="${patient}" method="get"  style="padding-left: 10px;">
+        <p><input type="submit" value="List Patients"></p>
+    </form>
+
+    <!--Will fill this out once we decide on a fourth query-->
+    <h3>Query #4: Unknown</h3>
+    <p>This query returns patients currently hospitalized and expected to be hospitalized for more than 5 days.</p>
+    <!--<form action="#" th:action="@{/getPatient}" th:object="${patient}" method="get"  style="padding-left: 10px;">-->
+        <!--<p><input type="submit" value="List Patients"></p>-->
+    <!--</form>-->
+
+    <h1>Query Results</h1>
+    <textarea id="results">
+        <!--The contents of the text area will be filled with the query results-->
+    </textarea>
+
+</div>
+</body>
+</html>

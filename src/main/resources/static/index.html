@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="header">
+    <h1>CSC 460 Program #4</h1>
+    <h4>Team Members: Laura Shoemake, Yebin Brandt, Chris Quevedo, and Hanna Veldhuizen</h4>
+</div>
+<div class="content">
+    <h3 style="padding-top: 15px;">Insert a Record</h3>
+    <form action="/addDoctor" style="padding-left: 15px;">
+        <input type="submit" value="Add Doctor"/>
+    </form>
+
+    <form action="/addPatient">
+        <input type="submit" value="Add Patient"/>
+    </form>
+
+    <form action="/addNurse">
+        <input type="submit" value="Add Nurse"/>
+    </form>
+
+    <form action="/addPharmacist">
+        <input type="submit" value="Add Pharmacist"/>
+    </form>
+
+    <form action="/addStaff">
+        <input type="submit" value="Add Staff"/>
+    </form>
+
+    <h3>Delete a Record</h3>
+    <form action="/deleteDoctor" style="padding-left: 15px;">
+        <input type="submit" value="Delete Doctor"/>
+    </form>
+
+    <form action="/deletePatient">
+        <input type="submit" value="Delete Patient"/>
+    </form>
+
+    <form action="/deleteNurse">
+        <input type="submit" value="Delete Nurse"/>
+    </form>
+
+    <form action="/deletePharmacist">
+        <input type="submit" value="Delete Pharmacist"/>
+    </form>
+
+    <form action="/deleteStaff">
+        <input type="submit" value="Delete Staff"/>
+    </form>
+
+    <h3>Update a Record</h3>
+    <form action="/updatePatient" style="padding-left: 15px;">
+        <input type="submit" value="Update Patient"/>
+    </form>
+
+    <h3>Query #1: Lookup Patient Record</h3>
+    <form class="query" action="#" th:action="@{/getPatient}" th:object="${patient}" method="get"  style="padding-left: 10px;">
+        <p>First Name: <input type="text" th:field="*{firstName}" required /></p>
+        <p>Last Name: <input type="text" th:field="*{lastName}" required /></p>
+        <p>DOB: <input type="date" th:field="*{DOB}" required /></p>
+        <p><input type="submit" value="Search"></p>
+    </form>
+
+    <h3>Query #2: List Doctors by Department</h3>
+    <form class="query" action="#" th:action="@{/getDepartment}" th:object="${department}" method="get"  style="padding-left: 10px;">
+        <p>Department Name: <input type="text" th:field="*{deptName}" required /></p>
+        <p><input type="submit" value="Search"></p>
+    </form>
+
+    <h3>Query #3: List Patients</h3>
+    <p style="padding-left: 15px;">This query returns patients currently hospitalized and expected to be hospitalized for more than 5 days.</p>
+    <form class="query" action="#" th:action="@{/getPatient}" th:object="${patient}" method="get"  style="padding-left: 10px;">
+        <p><input type="submit" value="List Patients"></p>
+    </form>
+
+    <!--Will fill this out once we decide on a fourth query-->
+    <h3>Query #4: Unknown</h3>
+    <!--<form action="#" th:action="@{/getPatient}" th:object="${patient}" method="get"  style="padding-left: 10px;">-->
+    <!--<p><input type="submit" value="List Patients"></p>-->
+    <!--</form>-->
+
+    <h3>Query Results</h3>
+    <textarea id="results">
+        The contents of the text area will be filled with the query results
+    </textarea>
+</div>
+</body>
+</html>

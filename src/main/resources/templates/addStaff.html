@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Staff</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="content" style="padding-left:15px">
+    <h1>Adding a Staff Member</h1>
+    <form action="#" th:action="@{/addStaff}" th:object="${staff}" method="post">
+        <p>ID: <input type="text" th:field="*{EID}" required/></p>
+        <p>First Name: <input type="text" th:field="*{firstName}" required/></p>
+        <p>Last Name: <input type="text" th:field="*{lastName}" required/></p>
+        <p>DOB: <input type="date" th:field="*{DOB}" required/></p>
+        <p>Job Title: <input type="text" th:field="*{salary}"/></p>
+        <p>Department ID: <input type="text" th:field="*{deptID}"/></p>
+        <p>Salary: <input type="text" th:field="*{salary}"/></p>
+        <p>Gender: <select th:field="*{gender}">
+            <option value=""></option>
+            <option value="m">M</option>
+            <option value="f">F</option>
+        </select>
+        </p>
+        <p>Phone Number: <input type="text" th:field="*{contactNumber}"/></p>
+        <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+    </form>
+</div>
+</body>
+</html>

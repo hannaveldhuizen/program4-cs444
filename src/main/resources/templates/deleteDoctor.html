@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delete Doctor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="content" style="padding-left:15px">
+    <h1>Delete a Doctor</h1>
+    <form action="#" th:action="@{/deleteDoctor}" th:object="${doctor}" method="post">
+        <p>ID: <input type="text" th:field="*{DID}" required /></p>
+        <p>First Name: <input type="text" th:field="*{firstName}" required /></p>
+        <p>Last Name: <input type="text" th:field="*{lastName}" required /></p>
+        <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+    </form>
+
+    <h1>Result</h1>
+    <p th:text="'Doctor Deleted:\nid: ' + ${doctor.DID}" />
+    <p th:text="'First Name: ' + ${doctor.firstName}" />
+    <p th:text="'Last Name: ' + ${doctor.lastName}" />
+
+</div>
+</body>
+</html>
