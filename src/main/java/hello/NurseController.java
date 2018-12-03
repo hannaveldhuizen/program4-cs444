@@ -63,11 +63,11 @@ public class NurseController {
     	if (nurse.getNID() != 0)
     		strs.add("nid = " + nurse.getNID());
     	if (nurse.getLastName() != null)
-    		strs.add("lastname = " + nurse.getLastName());
+    		strs.add("lastname = '" + nurse.getLastName() + "'");
     	if (nurse.getFirstName() != null)
-    		strs.add("firstname = " + nurse.getFirstName());
+    		strs.add("firstname = '" + nurse.getFirstName() +"'");
     	
-    	jdbcTemplate.update("delete from lshoemake.nurse where ?", String.join(" and ", strs));
+    	jdbcTemplate.update("delete from lshoemake.nurse where " + String.join(" and ", strs));
 
       return "deleteNurseResult";
     }
@@ -84,16 +84,17 @@ public class NurseController {
     	List<String> strs = new ArrayList<String>();
  
     	if (nurse.getLastName() != null)
-    		strs.add("lastname = " + nurse.getLastName());
+    		strs.add("lastname = '" + nurse.getLastName() + "'");
     	if (nurse.getFirstName() != null)
-    		strs.add("firstname = " + nurse.getFirstName());
+    		strs.add("firstname = '" + nurse.getFirstName() + "'");
     	if (nurse.getDeptID() != 0)
     		strs.add("deptid = " + nurse.getDeptID());
     	if (nurse.getRoomNumber() != 0)
     		strs.add("officenum = " + nurse.getRoomNumber());
     		
-        jdbcTemplate.update("update lshoemake.nurse set ? where ?",  
-        		String.join(", ", strs));
+        String stmt = String.format("update lshoemake.nurse set %s where nid = %s",  
+        				String.join(", ", strs), nurse.getNID());
+        jdbcTemplate.update(stmt);
 
         return "updateNurseResult";
     }

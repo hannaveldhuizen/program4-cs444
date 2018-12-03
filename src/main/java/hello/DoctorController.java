@@ -58,11 +58,11 @@ public class DoctorController {
     	if (doctor.getDID() != 0)
     		strs.add("did = " + doctor.getDID());
     	if (doctor.getLastName() != null)
-    		strs.add("lastname = " + doctor.getLastName());
+    		strs.add("lastname = '" + doctor.getLastName() + "'");
     	if (doctor.getFirstName() != null)
-    		strs.add("firstname = " + doctor.getFirstName());
+    		strs.add("firstname = '" + doctor.getFirstName() + "'");
     	
-    	jdbcTemplate.update("delete from lshoemake.doctor where ?", String.join(" and ", strs));
+    	jdbcTemplate.update("delete from lshoemake.doctor where " + String.join(" and ", strs));
 
       return "deleteDoctorResult";
     }
@@ -79,18 +79,19 @@ public class DoctorController {
     	List<String> strs = new ArrayList<String>();
  
     	if (doctor.getLastName() != null)
-    		strs.add("lastname = " + doctor.getLastName());
+    		strs.add("lastname = '" + doctor.getLastName() + "'");
     	if (doctor.getFirstName() != null)
-    		strs.add("firstname = " + doctor.getFirstName());
-    	if (doctor.getStatus() != null)
-    		strs.add("status = " + doctor.getStatus());
+    		strs.add("firstname = '" + doctor.getFirstName() + "'");
+    	if (!doctor.getStatus().equals(""))
+    		strs.add("status = '" + doctor.getStatus() + "'");
     	if (doctor.getDeptID() != 0)
     		strs.add("deptid = " + doctor.getDeptID());
     	if (doctor.getOfficeNumber() != 0)
     		strs.add("officenum = " + doctor.getOfficeNumber());
     		
-        jdbcTemplate.update("update lshoemake.doctor set ? where ?",  
-        		String.join(", ", strs));
+        String stmt = String.format("update lshoemake.doctor set %s where did = %s",  
+        				String.join(", ", strs), doctor.getDID());
+        jdbcTemplate.update(stmt);
 
         return "updateDoctorResult";
     }

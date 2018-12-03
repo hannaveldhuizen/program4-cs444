@@ -64,11 +64,11 @@ public class PharmacistController {
     	if (pharmacist.getPhID() != 0)
     		strs.add("phid = " + pharmacist.getPhID());
     	if (pharmacist.getLastName() != null)
-    		strs.add("lastname = " + pharmacist.getLastName());
+    		strs.add("lastname = '" + pharmacist.getLastName() + "'");
     	if (pharmacist.getFirstName() != null)
-    		strs.add("firstname = " + pharmacist.getFirstName());
+    		strs.add("firstname = '" + pharmacist.getFirstName() + "'");
     	
-    	jdbcTemplate.update("delete from lshoemake.pharmacist where ?", String.join(" and ", strs));
+    	jdbcTemplate.update("delete from lshoemake.pharmacist where " + String.join(" and ", strs));
 
 
       return "deletePharmacistResult";
@@ -85,17 +85,18 @@ public class PharmacistController {
     	List<String> strs = new ArrayList<String>();
  
     	if (pharmacist.getLastName() != null)
-    		strs.add("lastname = " + pharmacist.getLastName());
+    		strs.add("lastname = '" + pharmacist.getLastName() + "'");
     	if (pharmacist.getFirstName() != null)
-    		strs.add("firstname = " + pharmacist.getFirstName());
+    		strs.add("firstname = '" + pharmacist.getFirstName() + "'");
     	if (pharmacist.getDeptID() != 0)
     		strs.add("deptid = " + pharmacist.getDeptID());
     	if (pharmacist.getOfficeNumber() != 0)
     		strs.add("officenum = " + pharmacist.getOfficeNumber());
     		
-        jdbcTemplate.update("update lshoemake.pharmacist set ? where ?",  
-        		String.join(", ", strs));
+    	String stmt = String.format("update lshoemake.pharmacist set %s where phid = %s",
+    					String.join(", ", strs), pharmacist.getPhID());
 
+    	jdbcTemplate.update(stmt);
         return "updatePharmacistResult";
     }
 

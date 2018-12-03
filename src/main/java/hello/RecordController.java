@@ -68,19 +68,20 @@ public class RecordController {
     	if (record.getRecordNum() != 0)
     		strs.add("recordnum = " + record.getRecordNum());
     	if (record.getExpDischargeDate() != null)
-    		strs.add("expDischargeDate = " + record.getExpDischargeDate());
+    		strs.add("expDischargeDate = '" + record.getExpDischargeDate() + "'");
     	if (record.getActualDischargeDate() != null)
-    		strs.add("actualDischargeDate = " + record.getActualDischargeDate());
+    		strs.add("actualDischargeDate = '" + record.getActualDischargeDate() + "'");
     	if (record.getTreatmentMethod() != null)
-    		strs.add("treatmentMethod = " + record.getTreatmentMethod());
+    		strs.add("treatmentMethod = '" + record.getTreatmentMethod() + "'");
     	if (record.getHospRoom() != 0)
     		strs.add("hosproom = " + record.getHospRoom());
     	if (record.getDID() != 0)
     		strs.add("did = " + record.getDID());
  
     	
-        jdbcTemplate.update("update lshoemake.recordvisit set ? where ?", 
-        		String.join(", ", strs));
+    	String stmt = String.format("update lshoemake.recordvisit set %s where recordnum = %s",
+    			String.join(", ", strs), record.getRecordNum());
+        jdbcTemplate.update(stmt);
         
         
 

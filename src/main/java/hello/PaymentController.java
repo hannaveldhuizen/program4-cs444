@@ -62,18 +62,19 @@ public class PaymentController {
     	if (payment.getPayID() != 0)
     		strs.add("payid = " + payment.getPayID());
     	if (payment.getAmountDue() != null)
-    		strs.add("amountdue = " + payment.getAmountDue());
+    		strs.add("amountdue = '" + payment.getAmountDue() + "'");
     	if (payment.getDueDate() != null)
-    		strs.add("duedate = " + payment.getDueDate());
+    		strs.add("duedate = '" + payment.getDueDate() + "'");
     	if (payment.getStatus() != null)
-    		strs.add("status = " + payment.getStatus());
+    		strs.add("status = '" + payment.getStatus() + "'");
     	if (payment.getPaymentDate() != null)
-    		strs.add("paymentdate = " + payment.getPaymentDate());
+    		strs.add("paymentdate = '" + payment.getPaymentDate() + "'");
     	if (payment.getEID() != 0)
     		strs.add("eid = " + payment.getEID());
     	
-        jdbcTemplate.update("update lshoemake.payment set ? where ?",
-        		String.join(", ", strs));
+    	String stmt = String.format("update lshoemake.payment set %s where payid = %s", 
+    					String.join(", ", strs), payment.getPayID());
+        jdbcTemplate.update(stmt);
         
         return "updatePaymentResult";
     }

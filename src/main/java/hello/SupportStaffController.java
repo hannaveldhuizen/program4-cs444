@@ -66,11 +66,11 @@ public class SupportStaffController {
     	if (staff.getEID() != 0)
     		strs.add("eid = " + staff.getEID());
     	if (staff.getLastName() != null)
-    		strs.add("lastname = " + staff.getLastName());
+    		strs.add("lastname = '" + staff.getLastName() + "'");
     	if (staff.getFirstName() != null)
-    		strs.add("firstname = " + staff.getFirstName());
+    		strs.add("firstname = '" + staff.getFirstName() + "'");
     	
-    	jdbcTemplate.update("delete from lshoemake.supportstaff where ?", String.join(" and ", strs));
+    	jdbcTemplate.update("delete from lshoemake.supportstaff where " + String.join(" and ", strs));
 
 
       return "deleteStaffResult";
@@ -88,22 +88,23 @@ public class SupportStaffController {
     	List<String> strs = new ArrayList<String>();
  
     	if (staff.getLastName() != null)
-    		strs.add("lastname = " + staff.getLastName());
+    		strs.add("lastname = '" + staff.getLastName() + "'");
     	if (staff.getFirstName() != null)
-    		strs.add("firstname = " + staff.getFirstName());
+    		strs.add("firstname = '" + staff.getFirstName() + "'");
     	if (staff.getSalary() != 0)
     		strs.add("salary = " + staff.getSalary());
     	if (staff.getDeptID() != 0)
     		strs.add("deptid = " + staff.getDeptID());
     	if (staff.getJobTitle() != null)
-    		strs.add("jobtitle = " + staff.getJobTitle());
-    	if (staff.getGender() != null)
-    		strs.add("gender = " + staff.getGender());
+    		strs.add("jobtitle = '" + staff.getJobTitle() + "'");
+    	if (!staff.getGender().equals(""))
+    		strs.add("gender = '" + staff.getGender());
     	if (staff.getContactNumber() != null)
-    		strs.add("contactnum = " + staff.getContactNumber());
-    		
-        jdbcTemplate.update("update lshoemake.supportstaff set ? where ?",  
-        		String.join(", ", strs));
+    		strs.add("contactnum = '" + staff.getContactNumber() + "'");
+    	
+    	String stmt = String.format("update lshoemake.supportstaff set %s where eid = %s", 
+    			String.join(", ", strs), staff.getEID());
+        jdbcTemplate.update(stmt);
 
         return "updateStaffResult";
     }

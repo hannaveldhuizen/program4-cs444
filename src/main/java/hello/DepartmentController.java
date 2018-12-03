@@ -46,14 +46,15 @@ public class DepartmentController {
     	List<String> strs = new ArrayList<String>();
 
     	if (department.getDeptName() != null)
-    		strs.add("deptname = " + department.getDeptName());
+    		strs.add("deptname = '" + department.getDeptName() + "'");
     	if (department.getBuildingName() != null)
-    		strs.add("buildingname = " + department.getBuildingName());
+    		strs.add("buildingname = '" + department.getBuildingName() + "'");
     	if (department.getOfficeNum() != 0)
     		strs.add("officenum = " + department.getOfficeNum());
     	
-        jdbcTemplate.update("update lshoemake.department set ? where ?",
-        		String.join(", ", strs));
+    	String stmt = String.format("update lshoemake.department set %s where deptid = %s",
+        				String.join(", ", strs), department.getDeptID());
+        jdbcTemplate.update(stmt);
         return "updateDepartmentResult";
     }
 

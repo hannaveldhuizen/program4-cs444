@@ -45,7 +45,8 @@ public class PatientController {
     	
         jdbcTemplate.update("insert into lshoemake.patient values (?, ?, ?, ?, ?, ?, ?)", 
         	patient.getPID(), patient.getLastName(), patient.getFirstName(),
-        	patient.getGender(), patient.getDOB(), patient.getAddress(),
+        	patient.getGender().equals("") ? "NULL" : patient.getGender(), 
+        	patient.getDOB(), patient.getAddress(),
         	patient.getContactNumber());
 
         return "resultPatient";
@@ -64,11 +65,11 @@ public class PatientController {
     	if (patient.getPID() != 0)
     		strs.add("pid = " + patient.getPID());
     	if (patient.getLastName() != null)
-    		strs.add("lastname = " + patient.getLastName());
+    		strs.add("lastname = '" + patient.getLastName() + "'");
     	if (patient.getFirstName() != null)
-    		strs.add("firstname = " + patient.getFirstName());
+    		strs.add("firstname = '" + patient.getFirstName() + "'");
     	
-    	jdbcTemplate.update("delete from lshoemake.patient where ?", String.join(" and ", strs));
+    	jdbcTemplate.update("delete from lshoemake.patient where " + String.join(" and ", strs));
 
 
       return "deletePatientResult";
@@ -86,18 +87,19 @@ public class PatientController {
     	List<String> strs = new ArrayList<String>();
  
     	if (patient.getLastName() != null)
-    		strs.add("lastname = " + patient.getLastName());
+    		strs.add("lastname = '" + patient.getLastName() + "'");
     	if (patient.getFirstName() != null)
-    		strs.add("firstname = " + patient.getFirstName());
-    	if (patient.getGender() != null)
-    		strs.add("gender = " + patient.getGender());
+    		strs.add("firstname = '" + patient.getFirstName() + "'");
+    	if (!patient.getGender().equals(""))
+    		strs.add("gender = '" + patient.getGender() + "'");
     	if (patient.getAddress() != null)
-    		strs.add("address = " + patient.getAddress());
+    		strs.add("address = '" + patient.getAddress() + "'");
     	if (patient.getContactNumber() != null)
-    		strs.add("contactnum = " + patient.getContactNumber());
+    		strs.add("contactnum = '" + patient.getContactNumber() + "'");
     		
-        jdbcTemplate.update("update lshoemake.patient set ? where ?",  
-        		String.join(", ", strs));
+    	String stmt = String.format("update lshoemake.patient set %s where pid = %s", 
+    			String.join(", ", strs), patient.getPID());
+        jdbcTemplate.update(stmt);
 
         return "updatePatientResult";
     }
