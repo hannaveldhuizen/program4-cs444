@@ -46,7 +46,9 @@ public class SupportStaffController {
         		staff.getEID(), staff.getLastName(), staff.getFirstName(),
         		staff.getDOB(), staff.getSalary() == 0 ? "NULL" : staff.getSalary(), 
         		staff.getDeptID() == 0 ? "NULL" : staff.getDeptID(),
-        		staff.getJobTitle(), staff.getGender(), staff.getContactNumber());
+        		staff.getJobTitle(), 
+        		staff.getGender().equals("") ? "NULL" : staff.getGender(), 
+        		staff.getContactNumber());
 
         return "resultStaff";
     }

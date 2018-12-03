@@ -37,12 +37,11 @@ public class DoctorController {
 
     @PostMapping("/addDoctor")
     public String DoctorSubmit(@ModelAttribute Doctor doctor) {
-    	String query = String.format("insert into lshoemake.doctor values (%s, '%s', '%s', '%s', '%s', %s, %s)", 
+    	jdbcTemplate.update("insert into lshoemake.doctor values (?, ?, ?, ?, ?, ?, ?)", 
         		doctor.getDID(), doctor.getLastName(), doctor.getFirstName(),
         		doctor.getDOB(), doctor.getStatus().equals("") ? "NULL" : doctor.getStatus(), 
         		doctor.getDeptID() == 0 ? "NULL" : doctor.getDeptID(),
         		doctor.getOfficeNumber() == 0 ? "NULL" : doctor.getOfficeNumber());
-    	jdbcTemplate.update(query);
         return "resultDoctor";
     }
 
