@@ -1,5 +1,6 @@
 package hello;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,11 @@ public class SupportStaffController {
 
     @PostMapping("/addStaff")
     public String StaffSubmit(@ModelAttribute SupportStaff staff) {
+    	// check if user left these attrs blank
+    	if (staff.getEID() == 0 || staff.getFirstName() == null ||
+    		staff.getLastName() == null || staff.getDOB() == null)
+    		return null; 
+    	
         jdbcTemplate.update("insert into lshoemake.SupportStaff values (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
         		staff.getEID(), staff.getLastName(), staff.getFirstName(),
         		staff.getDOB(), staff.getSalary() == 0 ? "NULL" : staff.getSalary(), 
@@ -58,11 +64,53 @@ public class SupportStaffController {
 
     @PostMapping("/deleteStaff")
     public String StaffDelete(@ModelAttribute SupportStaff staff) {
-      jdbcTemplate.update("delete from lshoemake.SupportStaff "
-      		+ "where eid = ? and firstname = ? and lastname = ?", 
-    		  staff.getEID(), staff.getFirstName(), staff.getLastName());
+    	List<String> strs = new ArrayList<String>();
+    	
+    	if (staff.getEID() != 0)
+    		strs.add("eid = " + staff.getEID());
+    	if (staff.getLastName() != null)
+    		strs.add("lastname = " + staff.getLastName());
+    	if (staff.getFirstName() != null)
+    		strs.add("firstname = " + staff.getFirstName());
+    	
+    	jdbcTemplate.update("delete from lshoemake.supportstaff where ?", String.join(" and ", strs));
+
 
       return "deleteStaffResult";
+    }
+    
+    @GetMapping("/updateStaff")
+    public String StaffFormUpdate(Model model) {
+        model.addAttribute("staff", new SupportStaff());
+        return "updateStaff";
+    }
+
+    @PostMapping("/updateStaff")
+    public String StaffUpdate(@ModelAttribute SupportStaff staff) {
+    	
+    	List<String> strs = new ArrayList<String>();
+ 
+    	if (staff.getLastName() != null)
+    		strs.add("lastname = " + staff.getLastName());
+    	if (staff.getFirstName() != null)
+    		strs.add("firstname = " + staff.getFirstName());
+    	if (staff.getSalary() != 0)
+    		strs.add("salary = " + staff.getSalary());
+    	if (staff.getDeptID() != 0)
+    		strs.add("deptid = " + staff.getDeptID());
+    	if (staff.getJobTitle() != null)
+    		strs.add("jobtitle = " + staff.getJobTitle());
+    	if (staff.getGender() != null)
+    		strs.add("gender = " + staff.getGender());
+    	if (staff.getContactNumber() != null)
+    		strs.add("contactnum = " + staff.getContactNumber());
+    		
+        jdbcTemplate.update("update lshoemake.supportstaff "
+        		+ "set ? "
+        		+ "where ? ? ? ? ? ? ?)",  
+        		String.join(", ", strs));
+
+        return "updateStaffResult";
     }
     
     // FIX

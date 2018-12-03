@@ -1,5 +1,6 @@
 package hello;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,11 @@ public class PatientController {
 
     @PostMapping("/addPatient")
     public String PatientSubmit(@ModelAttribute Patient patient) {
+    	// check if user left these attrs blank
+    	if (patient.getPID() == 0 || patient.getFirstName() == null ||
+    		patient.getLastName() == null || patient.getDOB() == null)
+    		return null; 
+    	
         jdbcTemplate.update("insert into lshoemake.patient values (?, ?, ?, ?, ?, ?, ?)", 
         	patient.getPID(), patient.getLastName(), patient.getFirstName(),
         	patient.getGender(), patient.getDOB(), patient.getAddress(),
@@ -57,11 +63,49 @@ public class PatientController {
 
     @PostMapping("/deletePatient")
     public String PatientDelete(@ModelAttribute Patient patient) {
-      jdbcTemplate.update("delete from lshoemake.patient "
-      		+ "where pid = ? and firstname = ? and lastname = ?", 
-    		  patient.getPID(), patient.getFirstName(), patient.getLastName());
+    	List<String> strs = new ArrayList<String>();
+    	
+    	if (patient.getPID() != 0)
+    		strs.add("pid = " + patient.getPID());
+    	if (patient.getLastName() != null)
+    		strs.add("lastname = " + patient.getLastName());
+    	if (patient.getFirstName() != null)
+    		strs.add("firstname = " + patient.getFirstName());
+    	
+    	jdbcTemplate.update("delete from lshoemake.patient where ?", String.join(" and ", strs));
+
 
       return "deletePatientResult";
+    }
+    
+    @GetMapping("/updatePatient")
+    public String PatientFormUpdate(Model model) {
+        model.addAttribute("patient", new Patient());
+        return "updatePatient";
+    }
+
+    @PostMapping("/updatePatient")
+    public String PatientUpdate(@ModelAttribute Patient patient) {
+    	
+    	List<String> strs = new ArrayList<String>();
+ 
+    	if (patient.getLastName() != null)
+    		strs.add("lastname = " + patient.getLastName());
+    	if (patient.getFirstName() != null)
+    		strs.add("firstname = " + patient.getFirstName());
+    	if (patient.getGender() != null)
+    		strs.add("gender = " + patient.getGender());
+    	if (patient.getAddress() != null)
+    		strs.add("address = " + patient.getAddress());
+    	if (patient.getContactNumber() != null)
+    		strs.add("contactnum = " + patient.getContactNumber());
+    		
+        jdbcTemplate.update("update lshoemake.patient "
+        		+ "set ? "
+        		+ "where ? ? ? ? ? ? ?)",  
+        		String.join(", ", strs));
+
+        return "updatePatientResult";
     }
 
 //    // FIX

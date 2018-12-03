@@ -1,5 +1,6 @@
 package hello;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,11 @@ public class NurseController {
 
     @PostMapping("/addNurse")
     public String NurseSubmit(@ModelAttribute Nurse nurse) {
+    	// check if user left these attrs blank
+    	if (nurse.getNID() == 0 || nurse.getFirstName() == null ||
+    		nurse.getLastName() == null || nurse.getDOB() == null)
+    		return null; 
+    	
         jdbcTemplate.update("insert into lshoemake.nurse values (?, ?, ?, ?, ?, ?)", 
         		nurse.getNID(), nurse.getLastName(), nurse.getFirstName(), nurse.getDOB(), 
         		nurse.getDeptID() == 0 ? "NULL" : nurse.getDeptID(), 
@@ -56,11 +62,46 @@ public class NurseController {
 
     @PostMapping("/deleteNurse")
     public String NurseDelete(@ModelAttribute Nurse nurse) {
-      jdbcTemplate.update("delete from lshoemake.nurse where "
-      		+ "nid = ? and firstname = ? and lastname = ?", 
-    		  nurse.getNID(), nurse.getFirstName(), nurse.getLastName());
+    	List<String> strs = new ArrayList<String>();
+    	
+    	if (nurse.getNID() != 0)
+    		strs.add("nid = " + nurse.getNID());
+    	if (nurse.getLastName() != null)
+    		strs.add("lastname = " + nurse.getLastName());
+    	if (nurse.getFirstName() != null)
+    		strs.add("firstname = " + nurse.getFirstName());
+    	
+    	jdbcTemplate.update("delete from lshoemake.nurse where ?", String.join(" and ", strs));
 
       return "deleteNurseResult";
+    }
+    
+    @GetMapping("/updateNurse")
+    public String NurseFormUpdate(Model model) {
+        model.addAttribute("nurse", new Nurse());
+        return "updateNurse";
+    }
+
+    @PostMapping("/updateNurse")
+    public String NurseUpdate(@ModelAttribute Nurse nurse) {
+    	
+    	List<String> strs = new ArrayList<String>();
+ 
+    	if (nurse.getLastName() != null)
+    		strs.add("lastname = " + nurse.getLastName());
+    	if (nurse.getFirstName() != null)
+    		strs.add("firstname = " + nurse.getFirstName());
+    	if (nurse.getDeptID() != 0)
+    		strs.add("deptid = " + nurse.getDeptID());
+    	if (nurse.getRoomNumber() != 0)
+    		strs.add("officenum = " + nurse.getRoomNumber());
+    		
+        jdbcTemplate.update("update lshoemake.nurse "
+        		+ "set ? "
+        		+ "where ? ? ? ? ? ? ?)",  
+        		String.join(", ", strs));
+
+        return "updateNurseResult";
     }
 
 //    // FIX
