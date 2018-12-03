@@ -32,6 +32,18 @@
         <input type="submit" value="Add Staff"/>
     </form>
 
+    <form action="/addDepartment" style="padding-left: 15px;">
+        <input type="submit" value="Add Department"/>
+    </form>
+
+    <form action="/addRecord" style="padding-left: 15px;">
+        <input type="submit" value="Add Patient Record"/>
+    </form>
+
+    <form action="/addPayment" style="padding-left: 15px;">
+        <input type="submit" value="Add Payment"/>
+    </form>
+
     <h3>Delete a Record</h3>
     <form action="/deleteDoctor" style="padding-left: 15px;">
         <input type="submit" value="Delete Doctor"/>
@@ -56,6 +68,34 @@
     <h3>Update a Record</h3>
     <form action="/updatePatient" style="padding-left: 15px;">
         <input type="submit" value="Update Patient"/>
+    </form>
+
+    <form action="/updateDoctor" style="padding-left: 15px;">
+        <input type="submit" value="Update Doctor"/>
+    </form>
+
+    <form action="/updateNurse">
+        <input type="submit" value="Update Nurse"/>
+    </form>
+
+    <form action="/updatePharmacist">
+        <input type="submit" value="Update Pharmacist"/>
+    </form>
+
+    <form action="/updateStaff">
+        <input type="submit" value="Update Staff"/>
+    </form>
+
+    <form action="/updateDepartment" style="padding-left: 15px;">
+        <input type="submit" value="Update Department"/>
+    </form>
+
+    <form action="/updateRecord" style="padding-left: 15px;">
+        <input type="submit" value="Update Patient Record"/>
+    </form>
+
+    <form action="/updatePayment" style="padding-left: 15px;">
+        <input type="submit" value="Update Payment"/>
     </form>
 
     <h3>Query #1: Lookup Patient Record</h3>
@@ -83,11 +123,6 @@
     <!--<form action="#" th:action="@{/getPatient}" th:object="${patient}" method="get"  style="padding-left: 10px;">-->
     <!--<p><input type="submit" value="List Patients"></p>-->
     <!--</form>-->
-
-    <h3>Query Results</h3>
-    <textarea id="results">
-        The contents of the text area will be filled with the query results
-    </textarea>
 </div>
 </body>
 </html>

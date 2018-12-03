@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Record</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="content" style="padding-left:15px">
+    <h1>Updating a Patient Record</h1>
+    <form action="#" th:action="@{/updateRecord}" th:object="${record}" method="put">
+        <p>Record Num: <input type="text" th:field="*{recordNum}" required /></p>
+        <p>Expected Discharge Date: <input type="date" th:field="*{expDichargeDate}" /></p>
+        <p>Actual Discharge Date: <input type="date" th:field="*{actualDischargeDate}" /></p>
+        <p>Method of Treatment: <input type="date" th:field="*{treatmentMethod}" /></p>
+        <p>Doctor ID: <input type="text" th:field="*{DID}"/></p>
+        <p>Room Number: <input type="text" th:field="*{hospRoom}"/></p>
+        <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+    </form>
+</div>
+</body>
+</html>

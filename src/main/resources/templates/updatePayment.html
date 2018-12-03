@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Update Payment</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="content" style="padding-left:15px">
+    <h1>Updating a Payment</h1>
+    <form action="#" th:action="@{/updatePayment}" th:object="${payment}" method="put">
+        <p>Payment ID: <input type="text" th:field="*{payID}" required /></p>
+        <p>PID: <input type="text" th:field="*{PID}"  /></p>
+        <p>Amount Due: <input type="text" th:field="*{amountDue}" /></p>
+        <p>Due Date: <input type="date" th:field="*{dueDate}" /></p>
+        <p>Status: <input type="text" th:field="*{status}" /></p>
+        <p>Payment Date: <input type="date" th:field="*{paymentDate}" /></p>
+        <p>EID: <input type="text" th:field="*{EID}" /></p>
+        <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+    </form>
+</div>
+</body>
+</html>
