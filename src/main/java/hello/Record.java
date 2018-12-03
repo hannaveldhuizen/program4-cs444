@@ -31,7 +31,7 @@ public class Record {
 		this.initialHospDate = initialHospDate;
 	}
 	public String getExpDischargeDate() {
-		return expDichargeDate;
+		return expDischargeDate;
 	}
 	public void setExpDischargeDate(String expDischargeDate) {
 		this.expDischargeDate = expDischargeDate;

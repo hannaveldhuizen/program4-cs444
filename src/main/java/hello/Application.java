@@ -26,8 +26,8 @@ public class Application {
       DriverManagerDataSource ds = new DriverManagerDataSource();
       ds.setDriverClassName(oracle.jdbc.driver.OracleDriver.class.getName());
       ds.setUrl("jdbc:oracle:thin:@aloe.cs.arizona.edu:1521:oracle");
-      ds.setUsername("hannaveldhuizen");
-      ds.setPassword("a3649");
+      ds.setUsername("lshoemake");
+      ds.setPassword("a6826");
       return ds;
     }
     public static void main(String[] args) {
