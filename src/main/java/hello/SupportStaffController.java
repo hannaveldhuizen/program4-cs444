@@ -112,21 +112,6 @@ public class SupportStaffController {
 
         return "updateStaffResult";
     }
-    
-    // FIX
-    @GetMapping("/queryResults")
-    public String queryResults(Model model) {
-      List<String> allNames = this.jdbcTemplate.query(
-        "select * from lshoemake.staff",
-        new RowMapper<String>() {
-            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-                String first_name = rs.getString("firstname");
-                String last_name = rs.getString("lastname");
-                return (first_name + " " + last_name);
-            }
-        });
-        model.addAttribute("names", allNames);
-        return "/queryResults";
-    }
+   
 
 }

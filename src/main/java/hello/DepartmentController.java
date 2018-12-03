@@ -49,20 +49,20 @@ public class DepartmentController {
     }
 
     // FIX
-    @GetMapping("/queryResults")
-    public String queryResults(Model model) {
-      List<String> allNames = this.jdbcTemplate.query(
-        "select * from lshoemake.department",
-        new RowMapper<String>() {
-            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-                String first_name = rs.getString("first_name");
-                String last_name = rs.getString("last_name");
-                return (first_name + " " + last_name);
-            }
-        });
-        model.addAttribute("names", allNames);
-        return "/queryResults";
-    }
+//    @GetMapping("/queryResults")
+//    public String queryResults(Model model) {
+//      List<String> allNames = this.jdbcTemplate.query(
+//        "select * from lshoemake.department",
+//        new RowMapper<String>() {
+//            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+//                String first_name = rs.getString("first_name");
+//                String last_name = rs.getString("last_name");
+//                return (first_name + " " + last_name);
+//            }
+//        });
+//        model.addAttribute("names", allNames);
+//        return "/queryResults";
+//    }
 
 }
 

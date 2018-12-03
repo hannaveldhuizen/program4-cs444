@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Update Patient</title>
+    <title>Update Doctor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div id="content" style="padding-left:15px">
-    <h1>Updating a Patient</h1>
-    <form action="#" th:action="@{/updatePatient}" th:object="${patient}" method="put">
+    <h1>Updating a Doctor</h1>
+    <form action="#" th:action="@{/updateDoctor}" th:object="${doctor}" method="put">
         <!-- the ID will be used to locate the record to update, cannot be changed -->
-        <p>ID: <input type="text" th:field="*{PID}" /></p>
+        <p>ID: <input type="text" th:field="*{DID}" /></p>
         <p>First Name: <input type="text" th:field="*{firstName}" /></p>
         <p>Last Name: <input type="text" th:field="*{lastName}" /></p>
-        <p>Gender: <select th:field="*{gender}">
+        <p>Status: <select th:field="*{status}">
             <option value=""></option>
-            <option value="m">M</option>
-            <option value="f">F</option>
+            <option value="visiting">Visiting</option>
+            <option value="trainee">Trainee</option>
+            <option value="tenured">Tenured</option>
         </select>
         </p>
-        <p>Home Address: <input type="text" th:field="*{address}"/></p>
-        <p>Phone Number: <input type="text" th:field="*{contactNumber}"/></p>
+        <p>Department ID: <input type="text" th:field="*{deptID}"/></p>
+        <p>Office Number: <input type="text" th:field="*{officeNumber}"/></p>
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
     </form>
 </div>
