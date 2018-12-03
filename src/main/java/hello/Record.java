@@ -5,7 +5,7 @@ public class Record {
 	private int recordNum;
 	private int apptNum;
 	private String initialHospDate;
-	private String expDichargeDate;
+	private String expDischargeDate;
 	private String actualDischargeDate;
 	private String reason;
 	private String treatmentMethod;
@@ -30,11 +30,11 @@ public class Record {
 	public void setInitialHospDate(String initialHospDate) {
 		this.initialHospDate = initialHospDate;
 	}
-	public String getExpDichargeDate() {
+	public String getExpDischargeDate() {
 		return expDichargeDate;
 	}
-	public void setExpDichargeDate(String expDichargeDate) {
-		this.expDichargeDate = expDichargeDate;
+	public void setExpDischargeDate(String expDischargeDate) {
+		this.expDischargeDate = expDischargeDate;
 	}
 	public String getActualDischargeDate() {
 		return actualDischargeDate;

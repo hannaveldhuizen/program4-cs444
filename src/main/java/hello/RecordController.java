@@ -1,5 +1,6 @@
 package hello;
-
+import java.util.List;
+import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +46,7 @@ public class RecordController {
         jdbcTemplate.update("insert into lshoemake.Record values (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
         		record.getRecordNum() == 0 ? "NULL" : record.getRecordNum(), 
         		record.getApptNum(), record.getInitialHospDate(), 
-        		record.getExpDichargeDate(), record.getActualDischargeDate(), 
+        		record.getExpDischargeDate(), record.getActualDischargeDate(), 
         		record.getReason(), record.getTreatmentMethod(), 
         		record.getHospRoom() == 0 ? "NULL" : record.getHospRoom(),
         		record.getDID() == 0 ? "NULL" : record.getDID());
@@ -70,11 +71,11 @@ public class RecordController {
     		strs.add("expDischargeDate = " + record.getExpDischargeDate());
     	if (record.getActualDischargeDate() != null)
     		strs.add("actualDischargeDate = " + record.getActualDischargeDate());
-    	if (record.getTreatmentMethod() != 0)
+    	if (record.getTreatmentMethod() != null)
     		strs.add("treatmentMethod = " + record.getTreatmentMethod());
     	if (record.getHospRoom() != 0)
     		strs.add("hosproom = " + record.getHospRoom());
-    	if (record.getDid() != 0)
+    	if (record.getDID() != 0)
     		strs.add("did = " + record.getDID());
  
     	
