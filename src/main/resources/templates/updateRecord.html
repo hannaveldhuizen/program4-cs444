@@ -9,7 +9,9 @@
 <div class="content" style="padding-left:15px">
     <h1>Updating a Patient Record</h1>
     <form action="#" th:action="@{/updateRecord}" th:object="${record}" method="put">
+        <p><b>Enter the ID for the record you wish to update: </b></p>
         <p>Record Num: <input type="text" th:field="*{recordNum}" required /></p>
+        <p><b>Enter new values below:</b></p>
         <p>Expected Discharge Date: <input type="date" th:field="*{expDichargeDate}" /></p>
         <p>Actual Discharge Date: <input type="date" th:field="*{actualDischargeDate}" /></p>
         <p>Method of Treatment: <input type="date" th:field="*{treatmentMethod}" /></p>

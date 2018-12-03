@@ -16,7 +16,8 @@
     </form>
 
     <h1>Result</h1>
-    <p th:text="'Pharmacist Deleted:\nid: ' + ${pharmacist.NID}" />
+    <p>Pharmacist Deleted: </p>
+    <p th:text="'id: ' + ${pharmacist.phID}" />
     <p th:text="'First Name: ' + ${pharmacist.firstName}" />
     <p th:text="'Last Name: ' + ${pharmacist.lastName}" />
 

@@ -52,7 +52,7 @@ public class PharmacistController {
 
     @GetMapping("/deletePharmacist")
     public String PharmacistFormDelete(Model model) {
-        model.addAttribute("Pharmacist", new Pharmacist());
+        model.addAttribute("pharmacist", new Pharmacist());
         return "deletePharmacist";
     }
 
