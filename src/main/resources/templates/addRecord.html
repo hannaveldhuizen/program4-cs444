@@ -11,11 +11,11 @@
     <form action="#" th:action="@{/addRecord}" th:object="${record}" method="post">
         <p>Record Number: <input type="text" th:field="*{recordNum}" required /></p>
         <p>Appointment Number: <input type="text" th:field="*{apptNum}" required /></p>
-        <p>Reason: <input type="date" th:field="*{reason}" required /></p>
+        <p>Reason: <input type="text" th:field="*{reason}" required /></p>
         <p>Date Checked In: <input type="date" th:field="*{initialHospDate}" required /></p>
         <p>Expected Discharge Date: <input type="date" th:field="*{expDischargeDate}" /></p>
         <p>Actual Discharge Date: <input type="date" th:field="*{actualDischargeDate}" /></p>
-        <p>Method of Treatment: <input type="date" th:field="*{treatmentMethod}" /></p>
+        <p>Method of Treatment: <input type="text" th:field="*{treatmentMethod}" /></p>
         <p>Doctor ID: <input type="text" th:field="*{DID}"/></p>
         <p>Room Number: <input type="text" th:field="*{hospRoom}"/></p>
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>

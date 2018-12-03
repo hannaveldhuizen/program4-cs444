@@ -43,7 +43,7 @@ public class RecordController {
     @PostMapping("/addRecord")
     public String RecordSubmit(@ModelAttribute Record record) {
     	
-        jdbcTemplate.update("insert into lshoemake.Record values (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+        jdbcTemplate.update("insert into lshoemake.recordvisit values (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
         		record.getRecordNum() == 0 ? "NULL" : record.getRecordNum(), 
         		record.getApptNum(), record.getInitialHospDate(), 
         		record.getExpDischargeDate(), record.getActualDischargeDate(), 
@@ -79,7 +79,7 @@ public class RecordController {
     		strs.add("did = " + record.getDID());
  
     	
-        jdbcTemplate.update("update lshoemake.record set ? where ?", 
+        jdbcTemplate.update("update lshoemake.recordvisit set ? where ?", 
         		String.join(", ", strs));
         
         
