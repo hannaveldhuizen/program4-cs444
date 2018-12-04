@@ -39,7 +39,7 @@ public class DoctorController {
     public String DoctorSubmit(@ModelAttribute Doctor doctor) {
     	jdbcTemplate.update("insert into lshoemake.doctor values (?, ?, ?, ?, ?, ?, ?)", 
         		doctor.getDID(), doctor.getLastName(), doctor.getFirstName(),
-        		doctor.getDOB(), doctor.getStatus().equals("") ? "NULL" : doctor.getStatus(), 
+        		doctor.getDOB(), doctor.getStatus().equals("") ? null : doctor.getStatus(), 
         		doctor.getDeptID() == 0 ? null : doctor.getDeptID(),
         		doctor.getOfficeNumber() == 0 ? null : doctor.getOfficeNumber());
         return "resultDoctor";

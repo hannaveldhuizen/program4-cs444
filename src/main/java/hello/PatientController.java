@@ -45,7 +45,7 @@ public class PatientController {
     	
         jdbcTemplate.update("insert into lshoemake.patient values (?, ?, ?, ?, ?, ?, ?)", 
         	patient.getPID(), patient.getLastName(), patient.getFirstName(),
-        	patient.getGender().equals("") ? "NULL" : patient.getGender(), 
+        	patient.getGender().equals("") ? null : patient.getGender(), 
         	patient.getDOB(), patient.getAddress(),
         	patient.getContactNumber());
 
