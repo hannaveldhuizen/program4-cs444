@@ -1,3 +1,19 @@
+/*=============================================================================
+ |   Assignment:  Program #4: Database-driven Web Application
+ |       Author:  Yebin Brandt (yebinbrandt@email.arizona.edu)
+ |       Grader:  Terrence Lim and Bailey Nottingham
+ |
+ |       Course:  CSC 460
+ |   Instructor:  L. McCann
+ |     Due Date:  December 4, 2018 at the beginning of class
+ |
+ |  Description:  Uses Spring MVC to connect to Oracle database and do various ops.
+ |
+ |     Language:  Java (JDK 1.8)
+ | Ex. Packages:  org.springframework, javax.sql, org.slf4j.Logger, etc.
+ |                
+ | Deficiencies:  I know of no unsatisfied requirements or logic errors.
+ *===========================================================================*/
 package hello;
 
 import org.springframework.boot.SpringApplication;

@@ -1,7 +1,33 @@
+/*+----------------------------------------------------------------------
+ ||
+ ||  Class Record
+ ||
+ ||         Author:  Yebin Brandt
+ ||
+ ||        Purpose:  This class is to keep attrs for recordvisit table
+ ||
+ ||  Inherits From:  None
+ ||
+ ||     Interfaces:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||      Constants:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||   Constructors:  None
+ ||
+ ||  Class Methods:  None
+ ||
+ ||  Inst. Methods:  getters and setters only
+ ||
+ ++-----------------------------------------------------------------------*/
 package hello;
 
 public class Record {
 
+	private int PID;
 	private int recordNum;
 	private int apptNum;
 	private String initialHospDate;
@@ -12,6 +38,26 @@ public class Record {
 	private int hospRoom;
 	private int DID;
 	
+    /*---------------------------------------------------------------------
+    |  Method getters and setters
+    |
+    |  Purpose:  Encapsulation for instance fields
+    |
+    |  Pre-condition: None.
+    |
+    |  Post-condition: getters - unchanged. setters- the field is changed.
+    |
+    |  Parameters:
+    |      parameters for setters replace the old field values
+    |
+    |  Returns:  Getters - the field. Setters - None
+    *-------------------------------------------------------------------*/
+	public int getPID() {
+		return PID;
+	}
+	public void setPID(int PID) {
+		this.PID = PID;
+	}
 	public int getRecordNum() {
 		return recordNum;
 	}

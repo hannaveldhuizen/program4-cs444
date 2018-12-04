@@ -1,3 +1,30 @@
+/*+----------------------------------------------------------------------
+ ||
+ ||  Class DepartmentController
+ ||
+ ||         Author:  Yebin Brandt
+ ||
+ ||        Purpose:  Serves as a controller for any updates to department table
+ ||
+ ||  Inherits From:  None
+ ||
+ ||     Interfaces:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||      Constants:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||   Constructors:  None
+ ||
+ ||  Class Methods:  None
+ ||
+ ||  Inst. Methods:  postConstruct()
+ ||						departmentFormUpdate(Model)
+ ||						departmentUpdate(@ModelAttribute Department)
+ ||
+ ++-----------------------------------------------------------------------*/
 package hello;
 import java.util.List;
 import java.util.ArrayList;
@@ -34,14 +61,48 @@ public class DepartmentController {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
     
+    /*---------------------------------------------------------------------
+    |  Method departmentFormUpdate
+    |
+    |  Purpose:  Uses a Model object to expose a new Department to the view template. 
+    |				The Department object in the following code contains fields such
+    |				that correspond to the form fields in the department view,
+    |				and will be used to capture the information from the form.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "updateDepartment"
+    *-------------------------------------------------------------------*/
     @GetMapping("/updateDepartment")
-    public String DepartmentFormUpdate(Model model) {
+    public String departmentFormUpdate(Model model) {
         model.addAttribute("department", new Department());
         return "updateDepartment";
     }
 
-    @PostMapping("/updateDepartment") //FIX
-    public String DepartmentUpdate(@ModelAttribute Department department) {
+    /*---------------------------------------------------------------------
+    |  Method departmentUpdate
+    |
+    |  Purpose:  The Department object in the following code contains fields such
+    |				that correspond to the form fields in the department view,
+    |				and is used to capture the information from the form
+    |				and to update the database.
+    |
+    |  Pre-condition: department cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Department department from departmentFormUpdate
+    |
+    |  Returns:  String "updateDepartmentResult"
+    *-------------------------------------------------------------------*/
+    @PostMapping("/updateDepartment")
+    public String departmentUpdate(@ModelAttribute Department department) {
 
     	List<String> strs = new ArrayList<String>();
 
@@ -57,22 +118,6 @@ public class DepartmentController {
         jdbcTemplate.update(stmt);
         return "updateDepartmentResult";
     }
-
-    // FIX
-//    @GetMapping("/queryResults")
-//    public String queryResults(Model model) {
-//      List<String> allNames = this.jdbcTemplate.query(
-//        "select * from lshoemake.department",
-//        new RowMapper<String>() {
-//            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-//                String first_name = rs.getString("first_name");
-//                String last_name = rs.getString("last_name");
-//                return (first_name + " " + last_name);
-//            }
-//        });
-//        model.addAttribute("names", allNames);
-//        return "/queryResults";
-//    }
 
 }
 

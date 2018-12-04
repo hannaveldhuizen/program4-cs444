@@ -1,3 +1,30 @@
+/*+----------------------------------------------------------------------
+ ||
+ ||  Class PatientController
+ ||
+ ||         Author:  Yebin Brandt
+ ||
+ ||        Purpose:  Serves as a controller for any updates to patient table
+ ||
+ ||  Inherits From:  None
+ ||
+ ||     Interfaces:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||      Constants:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||   Constructors:  None
+ ||
+ ||  Class Methods:  None
+ ||
+ ||  Inst. Methods:  postConstruct(), patientForm(Model), patientSubmit(@ModelAttribute Patient)
+ ||						patientFormDelete(Model), patientDelete(@ModelAttribute Patient)
+ ||						patientFormUpdate(Model), patientUpdate(@ModelAttribute Patient)
+ ||
+ ++-----------------------------------------------------------------------*/
 package hello;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,14 +61,49 @@ public class PatientController {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /*---------------------------------------------------------------------
+    |  Method patientForm
+    |
+    |  Purpose:  Uses a Model object to expose a new Patient to the view template. 
+    |				The Patient object in the following code contains fields such
+    |				that correspond to the form fields in the patient view,
+    |				and will be used to capture the information from the form.
+    |				Used to add records to patient.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "addPatient"
+    *-------------------------------------------------------------------*/
     @GetMapping("/addPatient")
-    public String PatientForm(Model model) {
+    public String patientForm(Model model) {
         model.addAttribute("patient", new Patient());
         return "addPatient";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method patientSubmit
+    |
+    |  Purpose:  The Patient object in the following code contains fields such
+    |				that correspond to the form fields in the patient view,
+    |				and is used to capture the information from the form
+    |				and to add to the database.
+    |
+    |  Pre-condition: patient cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Patient patient from patientForm
+    |
+    |  Returns:  String "resultPatient"
+    *-------------------------------------------------------------------*/
     @PostMapping("/addPatient")
-    public String PatientSubmit(@ModelAttribute Patient patient) {
+    public String patientSubmit(@ModelAttribute Patient patient) {
     	
         jdbcTemplate.update("insert into lshoemake.patient values (?, ?, ?, ?, ?, ?, ?)", 
         	patient.getPID(), patient.getLastName(), patient.getFirstName(),
@@ -52,14 +114,49 @@ public class PatientController {
         return "resultPatient";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method patientFormDelete
+    |
+    |  Purpose:  Uses a Model object to expose a new Patient to the view template. 
+    |				The Patient object in the following code contains fields such
+    |				that correspond to the form fields in the patient view,
+    |				and will be used to capture the information from the form.
+    |				used to delete records from patient.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "deletePatient"
+    *-------------------------------------------------------------------*/
     @GetMapping("/deletePatient")
-    public String PatientFormDelete(Model model) {
+    public String patientFormDelete(Model model) {
         model.addAttribute("patient", new Patient());
         return "deletePatient";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method patientDelete
+    |
+    |  Purpose:  The Patient object in the following code contains fields such
+    |				that correspond to the form fields in the patient view,
+    |				and is used to capture the information from the form
+    |				and to delete from the database.
+    |
+    |  Pre-condition: patient cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Patient patient from patientFormDelete
+    |
+    |  Returns:  String "deletePatientResult"
+    *-------------------------------------------------------------------*/
     @PostMapping("/deletePatient")
-    public String PatientDelete(@ModelAttribute Patient patient) {
+    public String patientDelete(@ModelAttribute Patient patient) {
     	List<String> strs = new ArrayList<String>();
     	
     	if (patient.getPID() != 0)
@@ -71,18 +168,52 @@ public class PatientController {
     	
     	jdbcTemplate.update("delete from lshoemake.patient where " + String.join(" and ", strs));
 
-
       return "deletePatientResult";
     }
     
+    /*---------------------------------------------------------------------
+    |  Method patientFormUpdate
+    |
+    |  Purpose:  Uses a Model object to expose a new Patient to the view template. 
+    |				The Patient object in the following code contains fields such
+    |				that correspond to the form fields in the patient view,
+    |				and will be used to capture the information from the form.
+    |				used to update records in patient.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "updatePatient"
+    *-------------------------------------------------------------------*/
     @GetMapping("/updatePatient")
-    public String PatientFormUpdate(Model model) {
+    public String patientFormUpdate(Model model) {
         model.addAttribute("patient", new Patient());
         return "updatePatient";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method patientUpdate
+    |
+    |  Purpose:  The Patient object in the following code contains fields such
+    |				that correspond to the form fields in the patient view,
+    |				and is used to capture the information from the form
+    |				and to update the database.
+    |
+    |  Pre-condition: patient cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Patient patient from patientFormUpdate
+    |
+    |  Returns:  String "updatePatientResult"
+    *-------------------------------------------------------------------*/
     @PostMapping("/updatePatient")
-    public String PatientUpdate(@ModelAttribute Patient patient) {
+    public String patientUpdate(@ModelAttribute Patient patient) {
     	
     	List<String> strs = new ArrayList<String>();
  
@@ -103,21 +234,5 @@ public class PatientController {
 
         return "updatePatientResult";
     }
-
-//    // FIX
-//    @GetMapping("/queryResults")
-//    public String queryResults(Model model) {
-//      List<String> allNames = this.jdbcTemplate.query(
-//        "select * from lshoemake.patient",
-//        new RowMapper<String>() {
-//            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-//                String first_name = rs.getString("first_name");
-//                String last_name = rs.getString("last_name");
-//                return (first_name + " " + last_name);
-//            }
-//        });
-//        model.addAttribute("names", allNames);
-//        return "/queryResults";
-//    }
 
 }

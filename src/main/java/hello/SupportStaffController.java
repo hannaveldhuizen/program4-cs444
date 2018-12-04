@@ -1,3 +1,30 @@
+/*+----------------------------------------------------------------------
+ ||
+ ||  Class SupportStaffController
+ ||
+ ||         Author:  Yebin Brandt
+ ||
+ ||        Purpose:  Serves as a controller for updates to supportstaff table
+ ||
+ ||  Inherits From:  None
+ ||
+ ||     Interfaces:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||      Constants:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||   Constructors:  None
+ ||
+ ||  Class Methods:  None
+ ||
+ ||  Inst. Methods:  postConstruct(), staffForm(Model), staffSubmit(@ModelAttribute SupportStaff)
+ ||						staffFormDelete(Model), staffDelete(@ModelAttribute SupportStaff)
+ ||						staffFormUpdate(Model), staffUpdate(@ModelAttribute SupportStaff)
+ ||
+ ++-----------------------------------------------------------------------*/
 package hello;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,14 +61,49 @@ public class SupportStaffController {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /*---------------------------------------------------------------------
+    |  Method staffForm
+    |
+    |  Purpose:  Uses a Model object to expose a new Staff to the view template. 
+    |				The Staff object in the following code contains fields such
+    |				that correspond to the form fields in the supportstaff view,
+    |				and will be used to capture the information from the form.
+    |				Used to add records to supportstaff.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "addStaff"
+    *-------------------------------------------------------------------*/
     @GetMapping("/addStaff")
-    public String StaffForm(Model model) {
+    public String staffForm(Model model) {
         model.addAttribute("staff", new SupportStaff());
         return "addStaff";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method staffSubmit
+    |
+    |  Purpose:  The Staff object in the following code contains fields such
+    |				that correspond to the form fields in the supportstaff view,
+    |				and is used to capture the information from the form
+    |				and to update the database.
+    |
+    |  Pre-condition: staff cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Staff staff from staffForm
+    |
+    |  Returns:  String "resultStaff"
+    *-------------------------------------------------------------------*/
     @PostMapping("/addStaff")
-    public String StaffSubmit(@ModelAttribute SupportStaff staff) {
+    public String staffSubmit(@ModelAttribute SupportStaff staff) {
         jdbcTemplate.update("insert into lshoemake.SupportStaff values (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
         		staff.getEID(), staff.getLastName(), staff.getFirstName(),
         		staff.getDOB(), staff.getSalary() == 0 ? null : staff.getSalary(), 
@@ -53,14 +115,49 @@ public class SupportStaffController {
         return "resultStaff";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method staffFormDelete
+    |
+    |  Purpose:  Uses a Model object to expose a new Staff to the view template. 
+    |				The Staff object in the following code contains fields such
+    |				that correspond to the form fields in the supportstaff view,
+    |				and will be used to capture the information from the form.
+    |				Used to delete records from supportstaff.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "deleteStaff"
+    *-------------------------------------------------------------------*/
     @GetMapping("/deleteStaff")
-    public String StaffFormDelete(Model model) {
+    public String staffFormDelete(Model model) {
         model.addAttribute("staff", new SupportStaff());
         return "deleteStaff";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method staffDelete
+    |
+    |  Purpose:  The Staff object in the following code contains fields such
+    |				that correspond to the form fields in the supportstaff view,
+    |				and is used to capture the information from the form
+    |				and to update the database.
+    |
+    |  Pre-condition: staff cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Staff staff from staffFormDelete
+    |
+    |  Returns:  String "deleteStaffResult"
+    *-------------------------------------------------------------------*/
     @PostMapping("/deleteStaff")
-    public String StaffDelete(@ModelAttribute SupportStaff staff) {
+    public String staffDelete(@ModelAttribute SupportStaff staff) {
     	List<String> strs = new ArrayList<String>();
     	
     	if (staff.getEID() != 0)
@@ -76,14 +173,49 @@ public class SupportStaffController {
       return "deleteStaffResult";
     }
     
+    /*---------------------------------------------------------------------
+    |  Method staffFormUpdate
+    |
+    |  Purpose:  Uses a Model object to expose a new Staff to the view template. 
+    |				The Staff object in the following code contains fields such
+    |				that correspond to the form fields in the supportstaff view,
+    |				and will be used to capture the information from the form.
+    |				Used to update records in supportstaff.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "updateStaff"
+    *-------------------------------------------------------------------*/
     @GetMapping("/updateStaff")
-    public String StaffFormUpdate(Model model) {
+    public String staffFormUpdate(Model model) {
         model.addAttribute("staff", new SupportStaff());
         return "updateStaff";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method staffUpdate
+    |
+    |  Purpose:  The Staff object in the following code contains fields such
+    |				that correspond to the form fields in the supportstaff view,
+    |				and is used to capture the information from the form
+    |				and to update the database.
+    |
+    |  Pre-condition: staff cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Staff staff from staffFormUpdate
+    |
+    |  Returns:  String "updateStaffResult"
+    *-------------------------------------------------------------------*/
     @PostMapping("/updateStaff")
-    public String StaffUpdate(@ModelAttribute SupportStaff staff) {
+    public String staffUpdate(@ModelAttribute SupportStaff staff) {
     	
     	List<String> strs = new ArrayList<String>();
  

@@ -1,3 +1,30 @@
+/*+----------------------------------------------------------------------
+ ||
+ ||  Class PharmacistController
+ ||
+ ||         Author:  Yebin Brandt
+ ||
+ ||        Purpose:  Serves as a controller for any updates to pharmacist table
+ ||
+ ||  Inherits From:  None
+ ||
+ ||     Interfaces:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||      Constants:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||   Constructors:  None
+ ||
+ ||  Class Methods:  None
+ ||
+ ||  Inst. Methods:  postConstruct(), pharmacistForm(Model), pharmacistSubmit(@ModelAttribute Pharmacist)
+ ||						pharmacistFormDelete(Model), pharmacistDelete(@ModelAttribute Pharmacist)
+ ||						pharmacistFormUpdate(Model), pharmacistUpdate(@ModelAttribute Pharmacist)
+ ||
+ ++-----------------------------------------------------------------------*/
 package hello;
 import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
@@ -33,14 +60,49 @@ public class PharmacistController {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /*---------------------------------------------------------------------
+    |  Method pharmacistForm
+    |
+    |  Purpose:  Uses a Model object to expose a new Pharmacist to the view template. 
+    |				The Pharmacist object in the following code contains fields such
+    |				that correspond to the form fields in the pharmacist view,
+    |				and will be used to capture the information from the form.
+    |				Used to add records to pharmacist.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "addPharmacist"
+    *-------------------------------------------------------------------*/
     @GetMapping("/addPharmacist")
-    public String PharmacistForm(Model model) {
+    public String pharmacistForm(Model model) {
         model.addAttribute("pharmacist", new Pharmacist());
         return "addPharmacist";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method pharmacistSubmit
+    |
+    |  Purpose:  The Pharmacist object in the following code contains fields such
+    |				that correspond to the form fields in the pharmacist view,
+    |				and is used to capture the information from the form
+    |				and to add to the database.
+    |
+    |  Pre-condition: pharmacist cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Pharmacist pharmacist from pharmacistFormUpdate
+    |
+    |  Returns:  String "resultPharmacist"
+    *-------------------------------------------------------------------*/
     @PostMapping("/addPharmacist")
-    public String PharmacistSubmit(@ModelAttribute Pharmacist pharmacist) {
+    public String pharmacistSubmit(@ModelAttribute Pharmacist pharmacist) {
     	
         jdbcTemplate.update("insert into lshoemake.pharmacist values (?, ?, ?, ?, ?, ?)", 
         		pharmacist.getPhID(), pharmacist.getLastName(), 
@@ -51,14 +113,49 @@ public class PharmacistController {
         return "resultPharmacist";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method pharmacistFormDelete
+    |
+    |  Purpose:  Uses a Model object to expose a new Pharmacist to the view template. 
+    |				The Pharmacist object in the following code contains fields such
+    |				that correspond to the form fields in the pharmacist view,
+    |				and will be used to capture the information from the form.
+    |				Used to delete records from pharmacist.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "deletePharmacist"
+    *-------------------------------------------------------------------*/
     @GetMapping("/deletePharmacist")
-    public String PharmacistFormDelete(Model model) {
+    public String pharmacistFormDelete(Model model) {
         model.addAttribute("pharmacist", new Pharmacist());
         return "deletePharmacist";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method pharmacistDelete
+    |
+    |  Purpose:  The Pharmacist object in the following code contains fields such
+    |				that correspond to the form fields in the pharmacist view,
+    |				and is used to capture the information from the form
+    |				and to delete from the database.
+    |
+    |  Pre-condition: pharmacist cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Pharmacist pharmacist from pharmacistFormDelete
+    |
+    |  Returns:  String "deletePharmacistResult"
+    *-------------------------------------------------------------------*/
     @PostMapping("/deletePharmacist")
-    public String PharmacistDelete(@ModelAttribute Pharmacist pharmacist) {
+    public String pharmacistDelete(@ModelAttribute Pharmacist pharmacist) {
     	List<String> strs = new ArrayList<String>();
     	
     	if (pharmacist.getPhID() != 0)
@@ -70,17 +167,52 @@ public class PharmacistController {
     	
     	jdbcTemplate.update("delete from lshoemake.pharmacist where " + String.join(" and ", strs));
 
-
       return "deletePharmacistResult";
     }
+    
+    /*---------------------------------------------------------------------
+    |  Method pharmacistFormUpdate
+    |
+    |  Purpose:  Uses a Model object to expose a new Pharmacist to the view template. 
+    |				The Pharmacist object in the following code contains fields such
+    |				that correspond to the form fields in the pharmacist view,
+    |				and will be used to capture the information from the form.
+    |				Used to update records in pharmacist.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "updatePharmacist"
+    *-------------------------------------------------------------------*/
     @GetMapping("/updatePharmacist")
-    public String PharmacistFormUpdate(Model model) {
+    public String pharmacistFormUpdate(Model model) {
         model.addAttribute("pharmacist", new Pharmacist());
         return "updatePharmacist";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method pharmacistUpdate
+    |
+    |  Purpose:  The Pharmacist object in the following code contains fields such
+    |				that correspond to the form fields in the pharmacist view,
+    |				and is used to capture the information from the form
+    |				and to update the database.
+    |
+    |  Pre-condition: pharmacist cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Pharmacist pharmacist from pharmacistFormUpdate
+    |
+    |  Returns:  String "updatePharmacistResult"
+    *-------------------------------------------------------------------*/
     @PostMapping("/updatePharmacist")
-    public String PharmacistUpdate(@ModelAttribute Pharmacist pharmacist) {
+    public String pharmacistUpdate(@ModelAttribute Pharmacist pharmacist) {
     	
     	List<String> strs = new ArrayList<String>();
  
@@ -99,21 +231,5 @@ public class PharmacistController {
     	jdbcTemplate.update(stmt);
         return "updatePharmacistResult";
     }
-
-//    // FIX
-//    @GetMapping("/queryResults")
-//    public String queryResults(Model model) {
-//      List<String> allNames = this.jdbcTemplate.query(
-//        "select * from lshoemake.pharmacist",
-//        new RowMapper<String>() {
-//            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-//                String first_name = rs.getString("first_name");
-//                String last_name = rs.getString("last_name");
-//                return (first_name + " " + last_name);
-//            }
-//        });
-//        model.addAttribute("names", allNames);
-//        return "/queryResults";
-//    }
 
 }

@@ -1,3 +1,29 @@
+/*+----------------------------------------------------------------------
+ ||
+ ||  Class PaymentController
+ ||
+ ||         Author:  Yebin Brandt
+ ||
+ ||        Purpose:  Serves as a controller for any updates to payment table
+ ||
+ ||  Inherits From:  None
+ ||
+ ||     Interfaces:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||      Constants:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||   Constructors:  None
+ ||
+ ||  Class Methods:  None
+ ||
+ ||  Inst. Methods:  postConstruct(), paymentForm(Model), paymentSubmit(@ModelAttribute Payment)
+ ||						paymentFormUpdate(Model), paymentUpdate(@ModelAttribute Payment)
+ ||
+ ++-----------------------------------------------------------------------*/
 package hello;
 import java.util.List;
 import java.util.ArrayList;
@@ -34,14 +60,49 @@ public class PaymentController {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /*---------------------------------------------------------------------
+    |  Method paymentForm
+    |
+    |  Purpose:  Uses a Model object to expose a new Payment to the view template. 
+    |				The Payment object in the following code contains fields such
+    |				that correspond to the form fields in the payment view,
+    |				and will be used to capture the information from the form.
+    |				Used to add records to payment.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "addPayment"
+    *-------------------------------------------------------------------*/
     @GetMapping("/addPayment")
-    public String PaymentForm(Model model) {
+    public String paymentForm(Model model) {
         model.addAttribute("payment", new Payment());
         return "addPayment";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method paymentSubmit
+    |
+    |  Purpose:  The Payment object in the following code contains fields such
+    |				that correspond to the form fields in the payment view,
+    |				and is used to capture the information from the form
+    |				and to add to the database.
+    |
+    |  Pre-condition: payment cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Payment payment from paymentForm
+    |
+    |  Returns:  String "resultPayment"
+    *-------------------------------------------------------------------*/
     @PostMapping("/addPayment")
-    public String PaymentSubmit(@ModelAttribute Payment payment) {
+    public String paymentSubmit(@ModelAttribute Payment payment) {
         jdbcTemplate.update("insert into lshoemake.Payment values (?, ?, ?, ?, ?, ?, ?)", 
         		payment.getPayID(), payment.getPID(), payment.getAmountDue(),
         		payment.getDueDate(), payment.getStatus(), payment.getPaymentDate(),
@@ -50,14 +111,49 @@ public class PaymentController {
         return "resultPayment";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method paymentFormUpdate
+    |
+    |  Purpose:  Uses a Model object to expose a new Payment to the view template. 
+    |				The Payment object in the following code contains fields such
+    |				that correspond to the form fields in the payment view,
+    |				and will be used to capture the information from the form.
+    |				Used to update records in payment.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "updatePayment"
+    *-------------------------------------------------------------------*/
     @GetMapping("/updatePayment")
-    public String PaymentFormUpdate(Model model) {
+    public String paymentFormUpdate(Model model) {
         model.addAttribute("payment", new Payment());
         return "updatePayment";
     }
-
-    @PostMapping("/updatePayment") //FIX
-    public String PaymentUpdate(@ModelAttribute Payment payment) {
+    
+    /*---------------------------------------------------------------------
+    |  Method paymentUpdate
+    |
+    |  Purpose:  The Payment object in the following code contains fields such
+    |				that correspond to the form fields in the payment view,
+    |				and is used to capture the information from the form
+    |				and to update the database.
+    |
+    |  Pre-condition: payment cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Payment payment from paymentFormUpdate
+    |
+    |  Returns:  String "updatePaymentResult"
+    *-------------------------------------------------------------------*/
+    @PostMapping("/updatePayment")
+    public String paymentUpdate(@ModelAttribute Payment payment) {
     	List<String> strs = new ArrayList<String>();
     	if (payment.getPayID() != 0)
     		strs.add("payid = " + payment.getPayID());
@@ -78,22 +174,5 @@ public class PaymentController {
         
         return "updatePaymentResult";
     }
-    
-
-//    // FIX
-//    @GetMapping("/queryResults")
-//    public String queryResults(Model model) {
-//      List<String> allNames = this.jdbcTemplate.query(
-//        "select * from lshoemake.payment",
-//        new RowMapper<String>() {
-//            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-//                String first_name = rs.getString("first_name");
-//                String last_name = rs.getString("last_name");
-//                return (first_name + " " + last_name);
-//            }
-//        });
-//        model.addAttribute("names", allNames);
-//        return "/queryResults";
-//    }
 
 }

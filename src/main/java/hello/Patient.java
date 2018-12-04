@@ -1,3 +1,28 @@
+/*+----------------------------------------------------------------------
+ ||
+ ||  Class Patient
+ ||
+ ||         Author:  Yebin Brandt
+ ||
+ ||        Purpose:  This class is to keep attrs for patient table
+ ||
+ ||  Inherits From:  None
+ ||
+ ||     Interfaces:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||      Constants:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||   Constructors:  None
+ ||
+ ||  Class Methods:  None
+ ||
+ ||  Inst. Methods:  getters and setters only
+ ||
+ ++-----------------------------------------------------------------------*/
 package hello;
 
 public class Patient {
@@ -10,6 +35,20 @@ public class Patient {
 	private String address;
 	private String contactNumber;
 
+    /*---------------------------------------------------------------------
+    |  Method getters and setters
+    |
+    |  Purpose:  Encapsulation for instance fields
+    |
+    |  Pre-condition: None.
+    |
+    |  Post-condition: getters - unchanged. setters- the field is changed.
+    |
+    |  Parameters:
+    |      parameters for setters replace the old field values
+    |
+    |  Returns:  Getters - the field. Setters - None
+    *-------------------------------------------------------------------*/
     public String getFirstName() {
     	return firstName;
     }

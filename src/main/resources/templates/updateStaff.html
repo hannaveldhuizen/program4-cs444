@@ -11,11 +11,11 @@
     <form action="#" th:action="@{/updateStaff}" th:object="${staff}" method="put">
         <!-- the ID will be used to locate the record to update, cannot be changed -->
         <p><b>Enter the ID for the record you wish to update: </b></p>
-        <p>ID: <input type="text" th:field="*{SID}" /></p>
+        <p>ID: <input type="text" th:field="*{EID}" /></p>
         <p><b>Enter new values below:</b></p>
         <p>First Name: <input type="text" th:field="*{firstName}" required /></p>
         <p>Last Name: <input type="text" th:field="*{lastName}" required /></p>
-        <p>Job Title: <input type="text" th:field="*{salary}"/></p>
+        <p>Job Title: <input type="text" th:field="*{jobTitle}"/></p>
         <p>Department ID: <input type="text" th:field="*{deptID}"/></p>
         <p>Salary: <input type="text" th:field="*{salary}"/></p>
         <p>Gender: <select th:field="*{gender}">

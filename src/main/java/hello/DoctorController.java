@@ -1,3 +1,30 @@
+/*+----------------------------------------------------------------------
+ ||
+ ||  Class DoctorController
+ ||
+ ||         Author:  Yebin Brandt
+ ||
+ ||        Purpose:  Serves as a controller for any updates to doctor table
+ ||
+ ||  Inherits From:  None
+ ||
+ ||     Interfaces:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||      Constants:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||   Constructors:  None
+ ||
+ ||  Class Methods:  None
+ ||
+ ||  Inst. Methods:  postConstruct(), doctorForm(Model), doctorSubmit(@ModelAttribute Doctor)
+ ||						doctorFormDelete(Model), doctorDelete(@ModelAttribute Doctor)
+ ||						doctorFormUpdate(Model), doctorUpdate(@ModelAttribute Doctor)
+ ||
+ ++-----------------------------------------------------------------------*/
 package hello;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +56,49 @@ public class DoctorController {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /*---------------------------------------------------------------------
+    |  Method doctorForm
+    |
+    |  Purpose:  Uses a Model object to expose a new Doctor to the view template. 
+    |				The Doctor object in the following code contains fields such
+    |				that correspond to the form fields in the doctor view,
+    |				and will be used to capture the information from the form.
+    |				Used to add a record to doctor relation.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "addDoctor"
+    *-------------------------------------------------------------------*/
     @GetMapping("/addDoctor")
-    public String DoctorForm(Model model) {
+    public String doctorForm(Model model) {
         model.addAttribute("doctor", new Doctor());
         return "addDoctor";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method doctorSubmit
+    |
+    |  Purpose:  The Doctor object in the following code contains fields such
+    |				that correspond to the form fields in the doctor view,
+    |				and is used to capture the information from the form
+    |				and to add to the database.
+    |
+    |  Pre-condition: doctor cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Doctor doctor from doctorForm
+    |
+    |  Returns:  String "resultDoctor"
+    *-------------------------------------------------------------------*/
     @PostMapping("/addDoctor")
-    public String DoctorSubmit(@ModelAttribute Doctor doctor) {
+    public String doctorSubmit(@ModelAttribute Doctor doctor) {
     	jdbcTemplate.update("insert into lshoemake.doctor values (?, ?, ?, ?, ?, ?, ?)", 
         		doctor.getDID(), doctor.getLastName(), doctor.getFirstName(),
         		doctor.getDOB(), doctor.getStatus().equals("") ? null : doctor.getStatus(), 
@@ -45,14 +107,49 @@ public class DoctorController {
         return "resultDoctor";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method doctorFormDelete
+    |
+    |  Purpose:  Uses a Model object to expose a new Doctor to the view template. 
+    |				The Doctor object in the following code contains fields such
+    |				that correspond to the form fields in the doctor view,
+    |				and will be used to capture the information from the form.
+    |				Used to delete a record from doctor relation.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "deleteDoctor"
+    *-------------------------------------------------------------------*/
     @GetMapping("/deleteDoctor")
-    public String DoctorFormDelete(Model model) {
+    public String doctorFormDelete(Model model) {
         model.addAttribute("doctor", new Doctor());
         return "deleteDoctor";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method doctorDelete
+    |
+    |  Purpose:  The Doctor object in the following code contains fields such
+    |				that correspond to the form fields in the doctor view,
+    |				and is used to capture the information from the form
+    |				and to delete doctor recs from the database.
+    |
+    |  Pre-condition: doctor cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Doctor doctor from doctorFormDelete
+    |
+    |  Returns:  String "deleteDoctorResult"
+    *-------------------------------------------------------------------*/
     @PostMapping("/deleteDoctor")
-    public String DoctorDelete(@ModelAttribute Doctor doctor) {
+    public String doctorDelete(@ModelAttribute Doctor doctor) {
     	List<String> strs = new ArrayList<String>();
     	
     	if (doctor.getDID() != 0)
@@ -67,14 +164,49 @@ public class DoctorController {
       return "deleteDoctorResult";
     }
     
+    /*---------------------------------------------------------------------
+    |  Method doctorFormUpdate
+    |
+    |  Purpose:  Uses a Model object to expose a new Doctor to the view template. 
+    |				The Doctor object in the following code contains fields such
+    |				that correspond to the form fields in the doctor view,
+    |				and will be used to capture the information from the form.
+    |				Used to update a record in doctor relation.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "updateDoctor"
+    *-------------------------------------------------------------------*/
     @GetMapping("/updateDoctor")
-    public String DoctorFormUpdate(Model model) {
+    public String doctorFormUpdate(Model model) {
         model.addAttribute("doctor", new Doctor());
         return "updateDoctor";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method doctorUpdate
+    |
+    |  Purpose:  The Doctor object in the following code contains fields such
+    |				that correspond to the form fields in the doctor view,
+    |				and is used to capture the information from the form
+    |				and to update the database.
+    |
+    |  Pre-condition: doctor cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Doctor doctor from doctorFormUpdate
+    |
+    |  Returns:  String "updateDoctorResult"
+    *-------------------------------------------------------------------*/
     @PostMapping("/updateDoctor")
-    public String DoctorUpdate(@ModelAttribute Doctor doctor) {
+    public String doctorUpdate(@ModelAttribute Doctor doctor) {
     	
     	List<String> strs = new ArrayList<String>();
  

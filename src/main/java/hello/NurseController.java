@@ -1,3 +1,30 @@
+/*+----------------------------------------------------------------------
+ ||
+ ||  Class NurseController
+ ||
+ ||         Author:  Yebin Brandt
+ ||
+ ||        Purpose:  Serves as a controller for any updates to nurse table
+ ||
+ ||  Inherits From:  None
+ ||
+ ||     Interfaces:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||      Constants:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||   Constructors:  None
+ ||
+ ||  Class Methods:  None
+ ||
+ ||  Inst. Methods:  postConstruct(), nurseForm(Model), nurseSubmit(@ModelAttribute Nurse)
+ ||						nurseFormDelete(Model), nurseDelete(@ModelAttribute Nurse)
+ ||						nurseFormUpdate(Model), nurseUpdate(@ModelAttribute Nurse)
+ ||
+ ++-----------------------------------------------------------------------*/
 package hello;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,14 +61,49 @@ public class NurseController {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /*---------------------------------------------------------------------
+    |  Method nurseForm
+    |
+    |  Purpose:  Uses a Model object to expose a new Nurse to the view template. 
+    |				The Nurse object in the following code contains fields such
+    |				that correspond to the form fields in the nurse view,
+    |				and will be used to capture the information from the form.
+    |				Used to add records to nurse relation.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "addNurse"
+    *-------------------------------------------------------------------*/
     @GetMapping("/addNurse")
-    public String NurseForm(Model model) {
+    public String nurseForm(Model model) {
         model.addAttribute("nurse", new Nurse());
         return "addNurse";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method nurseSubmit
+    |
+    |  Purpose:  The Nurse object in the following code contains fields such
+    |				that correspond to the form fields in the nurse view,
+    |				and is used to capture the information from the form
+    |				and to add to the database.
+    |
+    |  Pre-condition: nurse cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Nurse nurse from nurseForm
+    |
+    |  Returns:  String "resultNurse"
+    *-------------------------------------------------------------------*/
     @PostMapping("/addNurse")
-    public String NurseSubmit(@ModelAttribute Nurse nurse) {
+    public String nurseSubmit(@ModelAttribute Nurse nurse) {
     	
         jdbcTemplate.update("insert into lshoemake.nurse values (?, ?, ?, ?, ?, ?)", 
         		nurse.getNID(), nurse.getLastName(), nurse.getFirstName(), nurse.getDOB(), 
@@ -50,14 +112,49 @@ public class NurseController {
         return "resultNurse";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method nurseFormDelete
+    |
+    |  Purpose:  Uses a Model object to expose a new Nurse to the view template. 
+    |				The Nurse object in the following code contains fields such
+    |				that correspond to the form fields in the nurse view,
+    |				and will be used to capture the information from the form.
+    |				used to delete records in nurse relation.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "deleteNurse"
+    *-------------------------------------------------------------------*/
     @GetMapping("/deleteNurse")
-    public String NurseFormDelete(Model model) {
+    public String nurseFormDelete(Model model) {
         model.addAttribute("nurse", new Nurse());
         return "deleteNurse";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method nurseDelete
+    |
+    |  Purpose:  The Nurse object in the following code contains fields such
+    |				that correspond to the form fields in the nurse view,
+    |				and is used to capture the information from the form
+    |				and to delete from the database.
+    |
+    |  Pre-condition: nurse cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Nurse nurse from nurseFormDelete
+    |
+    |  Returns:  String "deleteNurseResult"
+    *-------------------------------------------------------------------*/
     @PostMapping("/deleteNurse")
-    public String NurseDelete(@ModelAttribute Nurse nurse) {
+    public String nurseDelete(@ModelAttribute Nurse nurse) {
     	List<String> strs = new ArrayList<String>();
     	
     	if (nurse.getNID() != 0)
@@ -72,14 +169,49 @@ public class NurseController {
       return "deleteNurseResult";
     }
     
+    /*---------------------------------------------------------------------
+    |  Method nurseFormUpdate
+    |
+    |  Purpose:  Uses a Model object to expose a new Nurse to the view template. 
+    |				The Nurse object in the following code contains fields such
+    |				that correspond to the form fields in the nurse view,
+    |				and will be used to capture the information from the form.
+    |				Used to update records in nurse relation.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "updateNurse"
+    *-------------------------------------------------------------------*/
     @GetMapping("/updateNurse")
-    public String NurseFormUpdate(Model model) {
+    public String nurseFormUpdate(Model model) {
         model.addAttribute("nurse", new Nurse());
         return "updateNurse";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method nurseUpdate
+    |
+    |  Purpose:  The Nurse object in the following code contains fields such
+    |				that correspond to the form fields in the nurse view,
+    |				and is used to capture the information from the form
+    |				and to update the database.
+    |
+    |  Pre-condition: nurse cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Nurse nurse from nurseFormUpdate
+    |
+    |  Returns:  String "updateNurseResult"
+    *-------------------------------------------------------------------*/
     @PostMapping("/updateNurse")
-    public String NurseUpdate(@ModelAttribute Nurse nurse) {
+    public String nurseUpdate(@ModelAttribute Nurse nurse) {
     	
     	List<String> strs = new ArrayList<String>();
  
@@ -98,21 +230,5 @@ public class NurseController {
 
         return "updateNurseResult";
     }
-
-//    // FIX
-//    @GetMapping("/queryResults")
-//    public String queryResults(Model model) {
-//      List<String> allNames = this.jdbcTemplate.query(
-//        "select * from lshoemake.nurse",
-//        new RowMapper<String>() {
-//            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-//                String first_name = rs.getString("first_name");
-//                String last_name = rs.getString("last_name");
-//                return (first_name + " " + last_name);
-//            }
-//        });
-//        model.addAttribute("names", allNames);
-//        return "/queryResults";
-//    }
 
 }

@@ -1,3 +1,29 @@
+/*+----------------------------------------------------------------------
+ ||
+ ||  Class RecordController
+ ||
+ ||         Author:  Yebin Brandt
+ ||
+ ||        Purpose:  Serves as a controller for any updates to recordvisit table
+ ||
+ ||  Inherits From:  None
+ ||
+ ||     Interfaces:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||      Constants:  None
+ ||
+ |+-----------------------------------------------------------------------
+ ||
+ ||   Constructors:  None
+ ||
+ ||  Class Methods:  None
+ ||
+ ||  Inst. Methods:  postConstruct(), recordForm(Model), recordSubmit(@ModelAttribute Record)
+ ||						recordFormUpdate(Model), recordUpdate(@ModelAttribute Record)
+ ||
+ ++-----------------------------------------------------------------------*/
 package hello;
 import java.util.List;
 import java.util.ArrayList;
@@ -34,14 +60,49 @@ public class RecordController {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    /*---------------------------------------------------------------------
+    |  Method recordForm
+    |
+    |  Purpose:  Uses a Model object to expose a new Record to the view template. 
+    |				The Record object in the following code contains fields such
+    |				that correspond to the form fields in the recordvisit view,
+    |				and will be used to capture the information from the form.
+    |				Used to add records to recordvisit.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "addRecord"
+    *-------------------------------------------------------------------*/
     @GetMapping("/addRecord")
-    public String RecordForm(Model model) {
+    public String recordForm(Model model) {
         model.addAttribute("record", new Record());
         return "addRecord";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method recordSubmit
+    |
+    |  Purpose:  The Record object in the following code contains fields such
+    |				that correspond to the form fields in the record visit view,
+    |				and is used to capture the information from the form
+    |				and to add to the database.
+    |
+    |  Pre-condition: record cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Record record from recordForm
+    |
+    |  Returns:  String "resultRecord"
+    *-------------------------------------------------------------------*/
     @PostMapping("/addRecord")
-    public String RecordSubmit(@ModelAttribute Record record) {
+    public String recordSubmit(@ModelAttribute Record record) {
     	
         jdbcTemplate.update("insert into lshoemake.recordvisit values (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
         		record.getRecordNum() == 0 ? null : record.getRecordNum(), 
@@ -50,18 +111,53 @@ public class RecordController {
         		record.getReason(), record.getTreatmentMethod(), 
         		record.getHospRoom() == 0 ? null : record.getHospRoom(),
         		record.getDID() == 0 ? null : record.getDID());
-
+        
         return "resultRecord";
     }
 
+    /*---------------------------------------------------------------------
+    |  Method recordFormUpdate
+    |
+    |  Purpose:  Uses a Model object to expose a new Record to the view template. 
+    |				The Record object in the following code contains fields such
+    |				that correspond to the form fields in the recordvisit view,
+    |				and will be used to capture the information from the form.
+    |				Used to update records in recordvisit.
+    |
+    |  Pre-condition: model cannot be null
+    |
+    |  Post-condition: gets mapping
+    |
+    |  Parameters:
+    |      Model model object from server
+    |
+    |  Returns:  String "updateRecord"
+    *-------------------------------------------------------------------*/
     @GetMapping("/updateRecord")
-    public String RecordFormUpdate(Model model) {
+    public String recordFormUpdate(Model model) {
         model.addAttribute("record", new Record());
         return "updateRecord";
     }
 
-    @PostMapping("/updateRecord") //FIX
-    public String RecordUpdate(@ModelAttribute Record record) {
+    /*---------------------------------------------------------------------
+    |  Method recordUpdate
+    |
+    |  Purpose:  The Record object in the following code contains fields such
+    |				that correspond to the form fields in the record visit view,
+    |				and is used to capture the information from the form
+    |				and to update the database.
+    |
+    |  Pre-condition: record cannot be null.
+    |
+    |  Post-condition: posts mapping
+    |
+    |  Parameters:
+    |      @ModelAttribute Record record from recordFormUpdate
+    |
+    |  Returns:  String "updateRecordResult"
+    *-------------------------------------------------------------------*/
+    @PostMapping("/updateRecord")
+    public String recordUpdate(@ModelAttribute Record record) {
         
         List<String> strs = new ArrayList<String>();
         
@@ -77,14 +173,11 @@ public class RecordController {
     		strs.add("hosproom = " + record.getHospRoom());
     	if (record.getDID() != 0)
     		strs.add("did = " + record.getDID());
- 
     	
     	String stmt = String.format("update lshoemake.recordvisit set %s where recordnum = %s",
     			String.join(", ", strs), record.getRecordNum());
         jdbcTemplate.update(stmt);
         
-        
-
         return "updateRecordResult";
     }
 
