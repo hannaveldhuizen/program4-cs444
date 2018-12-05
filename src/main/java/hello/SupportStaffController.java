@@ -162,9 +162,9 @@ public class SupportStaffController {
     	
     	if (staff.getEID() != 0)
     		strs.add("eid = " + staff.getEID());
-    	if (staff.getLastName() != null)
+    	if (!staff.getLastName().equals(""))
     		strs.add("lastname = '" + staff.getLastName() + "'");
-    	if (staff.getFirstName() != null)
+    	if (!staff.getFirstName().equals(""))
     		strs.add("firstname = '" + staff.getFirstName() + "'");
     	
     	jdbcTemplate.update("delete from lshoemake.supportstaff where " + String.join(" and ", strs));
@@ -219,19 +219,19 @@ public class SupportStaffController {
     	
     	List<String> strs = new ArrayList<String>();
  
-    	if (staff.getLastName() != null)
+    	if (!staff.getLastName().equals(""))
     		strs.add("lastname = '" + staff.getLastName() + "'");
-    	if (staff.getFirstName() != null)
+    	if (!staff.getFirstName().equals(""))
     		strs.add("firstname = '" + staff.getFirstName() + "'");
     	if (staff.getSalary() != 0)
     		strs.add("salary = " + staff.getSalary());
     	if (staff.getDeptID() != 0)
     		strs.add("deptid = " + staff.getDeptID());
-    	if (staff.getJobTitle() != null)
+    	if (!staff.getJobTitle().equals(""))
     		strs.add("jobtitle = '" + staff.getJobTitle() + "'");
     	if (!staff.getGender().equals(""))
     		strs.add("gender = '" + staff.getGender());
-    	if (staff.getContactNumber() != null)
+    	if (!staff.getContactNumber().equals(""))
     		strs.add("contactnum = '" + staff.getContactNumber() + "'");
     	
     	String stmt = String.format("update lshoemake.supportstaff set %s where eid = %s", 

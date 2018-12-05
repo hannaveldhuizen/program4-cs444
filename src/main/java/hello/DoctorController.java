@@ -154,9 +154,9 @@ public class DoctorController {
     	
     	if (doctor.getDID() != 0)
     		strs.add("did = " + doctor.getDID());
-    	if (doctor.getLastName() != null)
+    	if (!doctor.getLastName().equals(""))
     		strs.add("lastname = '" + doctor.getLastName() + "'");
-    	if (doctor.getFirstName() != null)
+    	if (!doctor.getFirstName().equals(""))
     		strs.add("firstname = '" + doctor.getFirstName() + "'");
     	
     	jdbcTemplate.update("delete from lshoemake.doctor where " + String.join(" and ", strs));
@@ -210,9 +210,9 @@ public class DoctorController {
     	
     	List<String> strs = new ArrayList<String>();
  
-    	if (doctor.getLastName() != null)
+    	if (!doctor.getLastName().equals(""))
     		strs.add("lastname = '" + doctor.getLastName() + "'");
-    	if (doctor.getFirstName() != null)
+    	if (!doctor.getFirstName().equals(""))
     		strs.add("firstname = '" + doctor.getFirstName() + "'");
     	if (!doctor.getStatus().equals(""))
     		strs.add("status = '" + doctor.getStatus() + "'");

@@ -106,9 +106,9 @@ public class DepartmentController {
 
     	List<String> strs = new ArrayList<String>();
 
-    	if (department.getDeptName() != null)
+    	if (!department.getDeptName().equals(""))
     		strs.add("deptname = '" + department.getDeptName() + "'");
-    	if (department.getBuildingName() != null)
+    	if (!department.getBuildingName().equals(""))
     		strs.add("buildingname = '" + department.getBuildingName() + "'");
     	if (department.getOfficeNum() != 0)
     		strs.add("officenum = " + department.getOfficeNum());

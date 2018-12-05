@@ -163,11 +163,11 @@ public class RecordController {
         
     	if (record.getRecordNum() != 0)
     		strs.add("recordnum = " + record.getRecordNum());
-    	if (record.getExpDischargeDate() != null)
+    	if (!record.getExpDischargeDate().equals(""))
     		strs.add("expDischargeDate = '" + record.getExpDischargeDate() + "'");
-    	if (record.getActualDischargeDate() != null)
+    	if (!record.getActualDischargeDate().equals(""))
     		strs.add("actualDischargeDate = '" + record.getActualDischargeDate() + "'");
-    	if (record.getTreatmentMethod() != null)
+    	if (!record.getTreatmentMethod().equals(""))
     		strs.add("treatmentMethod = '" + record.getTreatmentMethod() + "'");
     	if (record.getHospRoom() != 0)
     		strs.add("hosproom = " + record.getHospRoom());

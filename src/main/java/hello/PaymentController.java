@@ -157,13 +157,13 @@ public class PaymentController {
     	List<String> strs = new ArrayList<String>();
     	if (payment.getPayID() != 0)
     		strs.add("payid = " + payment.getPayID());
-    	if (payment.getAmountDue() != null)
+    	if (!payment.getAmountDue().equals(""))
     		strs.add("amountdue = '" + payment.getAmountDue() + "'");
-    	if (payment.getDueDate() != null)
+    	if (!payment.getDueDate().equals(""))
     		strs.add("duedate = '" + payment.getDueDate() + "'");
-    	if (payment.getStatus() != null)
+    	if (!payment.getStatus().equals(""))
     		strs.add("status = '" + payment.getStatus() + "'");
-    	if (payment.getPaymentDate() != null)
+    	if (!payment.getPaymentDate().equals(""))
     		strs.add("paymentdate = '" + payment.getPaymentDate() + "'");
     	if (payment.getEID() != 0)
     		strs.add("eid = " + payment.getEID());

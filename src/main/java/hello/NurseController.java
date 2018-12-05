@@ -159,10 +159,10 @@ public class NurseController {
     	
     	if (nurse.getNID() != 0)
     		strs.add("nid = " + nurse.getNID());
-    	if (nurse.getLastName() != null)
+    	if (!nurse.getLastName().equals(""))
     		strs.add("lastname = '" + nurse.getLastName() + "'");
-    	if (nurse.getFirstName() != null)
-    		strs.add("firstname = '" + nurse.getFirstName() +"'");
+    	if (!nurse.getFirstName().equals(""))
+    		strs.add("firstname = '" + nurse.getFirstName() + "'");
     	
     	jdbcTemplate.update("delete from lshoemake.nurse where " + String.join(" and ", strs));
 
@@ -215,9 +215,9 @@ public class NurseController {
     	
     	List<String> strs = new ArrayList<String>();
  
-    	if (nurse.getLastName() != null)
+    	if (!nurse.getLastName().equals(""))
     		strs.add("lastname = '" + nurse.getLastName() + "'");
-    	if (nurse.getFirstName() != null)
+    	if (!nurse.getFirstName().equals(""))
     		strs.add("firstname = '" + nurse.getFirstName() + "'");
     	if (nurse.getDeptID() != 0)
     		strs.add("deptid = " + nurse.getDeptID());

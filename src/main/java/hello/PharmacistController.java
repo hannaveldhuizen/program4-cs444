@@ -160,9 +160,9 @@ public class PharmacistController {
     	
     	if (pharmacist.getPhID() != 0)
     		strs.add("phid = " + pharmacist.getPhID());
-    	if (pharmacist.getLastName() != null)
+    	if (!pharmacist.getLastName().equals(""))
     		strs.add("lastname = '" + pharmacist.getLastName() + "'");
-    	if (pharmacist.getFirstName() != null)
+    	if (!pharmacist.getFirstName().equals(""))
     		strs.add("firstname = '" + pharmacist.getFirstName() + "'");
     	
     	jdbcTemplate.update("delete from lshoemake.pharmacist where " + String.join(" and ", strs));
@@ -216,9 +216,9 @@ public class PharmacistController {
     	
     	List<String> strs = new ArrayList<String>();
  
-    	if (pharmacist.getLastName() != null)
+    	if (!pharmacist.getLastName().equals(""))
     		strs.add("lastname = '" + pharmacist.getLastName() + "'");
-    	if (pharmacist.getFirstName() != null)
+    	if (!pharmacist.getFirstName().equals(""))
     		strs.add("firstname = '" + pharmacist.getFirstName() + "'");
     	if (pharmacist.getDeptID() != 0)
     		strs.add("deptid = " + pharmacist.getDeptID());
