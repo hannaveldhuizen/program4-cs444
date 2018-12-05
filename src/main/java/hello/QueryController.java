@@ -93,12 +93,17 @@ public class QueryController {
 				maxIndex = i;
 			}
 		}
-		
+		/*
 		List<String> retVal = new ArrayList<String>();
 		if(allNames.size() != 0){
 			retVal.add(allNames.get(maxIndex));
 		}
-		
+		*/
+		String retVal = "";
+		if(allNames.size() != 0){
+			//retVal.add(allNames.get(maxIndex));
+			retVal += allNames.get(maxIndex);
+		}
         model.addAttribute("retVal", retVal);	
 		
         return "/query1Results";
@@ -145,6 +150,7 @@ public class QueryController {
 		query1 += " lshoemake.Appointment where RecordVisit.apptnum=Appointment.apptnum and Patient.pid=Appointment.pid";
 		query1 += " and RecordVisit.actualDischargeDate is NULL";
 		
+		System.out.println(query1);
 		List<String> q1List = this.jdbcTemplate.query(
         query1,
         new RowMapper<String>() {
@@ -162,7 +168,7 @@ public class QueryController {
 		// q1List gives list with patients currently hospitalized meaning actualDischargeDate is null
 		
 		String query2 = "select Patient.pid, amountdue from lshoemake.Patient, lshoemake.Payment where Patient.pid=Payment.pid and status='NOT PAID'";
-		
+		System.out.println(query2);
 		List<String> q2List = this.jdbcTemplate.query(
 		query2,
 		new RowMapper<String>() {
@@ -233,9 +239,9 @@ public class QueryController {
     public String query4(Model model) {
 		System.out.println("D");
 		
-		String query1 = "select Patient.pid, Patient.firstName, Patient.lastName, eid, phid from ";
+		String query1 = "select Patient.pid, Patient.firstName, Patient.lastName, SupportStaff.eid, Pharmacist.phid from ";
 		query1 += "lshoemake.Patient, lshoemake.Medicine, lshoemake.Pharmacist, lshoemake.Appointment, lshoemake.SupportStaff";
-		query1 += "where Patient.pid=Medicine.pid and Pharmacist.phid=Medicine.phid and Patient.pid=Appointment.pid and";
+		query1 += " where Patient.pid=Medicine.pid and Pharmacist.phid=Medicine.phid and Patient.pid=Appointment.pid and";
 		query1 += " SupportStaff.eid=Appointment.eid";
 		
 		List<String> retVal = this.jdbcTemplate.query(

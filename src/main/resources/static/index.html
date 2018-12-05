@@ -95,10 +95,10 @@
     </form>
 
     <h3>Query #1: Lookup Patient Record</h3>
-    <form class="query" action="#" th:action="@{/query1}" th:object="${patient}" method="get"  style="padding-left: 10px;">
-        <p>First Name: <input type="text" th:field="*{firstName}" required /></p>
-        <p>Last Name: <input type="text" th:field="*{lastName}" required /></p>
-        <p>DOB: <input type="date" th:field="*{DOB}" required /></p>
+    <form action="query1Results" th:action="@{/}" th:object="${patient}" method="get"  style="padding-left: 10px;">
+        <p>First Name: <input type="text" name="search" id="search" required /></p>
+        <p>Last Name: <input type="text" name="search1" id="search1" required /></p>
+        <p>DOB: <input type="text" name="search2" id="search2" required /></p>
         <p><input type="submit" value="Search"></p>
     </form>
 
@@ -110,15 +110,16 @@
 
     <h3>Query #3: List Patients</h3>
     <p style="padding-left: 15px;">This query returns patients currently hospitalized and expected to be hospitalized for more than 5 days.</p>
-    <form class="query" action="#" th:action="@{/query1}" th:object="${patient}" method="get"  style="padding-left: 10px;">
+    <form action="query3Results" th:action="@{/}" method="get"  style="padding-left: 10px;">
         <p><input type="submit" value="List Patients"></p>
     </form>
 
     <!--Will fill this out once we decide on a fourth query-->
-    <h3>Query #4: Unknown</h3>
-    <!--<form action="#" th:action="@{/getPatient}" th:object="${patient}" method="get"  style="padding-left: 10px;">-->
-    <!--<p><input type="submit" value="List Patients"></p>-->
-    <!--</form>-->
+    <h3>Query #4: List Patients taking medication and their receptionist and pharmacist</h3>
+    <p style="padding-left: 15px;">This query returns patients taking medication and their receptionist and pharmacist.</p>
+    <form action="query4Results" th:action="@{/}" method="get"  style="padding-left: 10px;">
+        <p><input type="submit" value="List Patients"></p>
+    </form>
 </div>
 </body>
 </html>
