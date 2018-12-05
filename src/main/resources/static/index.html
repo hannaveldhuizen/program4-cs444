@@ -103,8 +103,8 @@
     </form>
 
     <h3>Query #2: List Doctors by Department</h3>
-    <form class="query" action="#" th:action="@{/getDepartment}" th:object="${department}" method="get"  style="padding-left: 10px;">
-        <p>Department Name: <input type="text" th:field="*{deptName}" required /></p>
+    <form action="query2Results" th:action="@{/}" th:object="${search}" method="get"  style="padding-left: 10px;">
+        <p>Department Name: <input name="search" id="search" required /></p>
         <p><input type="submit" value="Search"></p>
     </form>
 
