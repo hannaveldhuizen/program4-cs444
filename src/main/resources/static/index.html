@@ -95,7 +95,7 @@
     </form>
 
     <h3>Query #1: Lookup Patient Record</h3>
-    <form class="query" action="#" th:action="@{/getPatient}" th:object="${patient}" method="get"  style="padding-left: 10px;">
+    <form class="query" action="#" th:action="@{/query1}" th:object="${patient}" method="get"  style="padding-left: 10px;">
         <p>First Name: <input type="text" th:field="*{firstName}" required /></p>
         <p>Last Name: <input type="text" th:field="*{lastName}" required /></p>
         <p>DOB: <input type="date" th:field="*{DOB}" required /></p>
@@ -103,14 +103,14 @@
     </form>
 
     <h3>Query #2: List Doctors by Department</h3>
-    <form class="query" action="#" th:action="@{/getDepartment}" th:object="${department}" method="get"  style="padding-left: 10px;">
-        <p>Department Name: <input type="text" th:field="*{deptName}" required /></p>
+    <form action="query2Results" th:action="@{/}" th:object="${search}" method="get"  style="padding-left: 10px;">
+        <p>Department Name: <input name="search" id="search" required /></p>
         <p><input type="submit" value="Search"></p>
     </form>
 
     <h3>Query #3: List Patients</h3>
     <p style="padding-left: 15px;">This query returns patients currently hospitalized and expected to be hospitalized for more than 5 days.</p>
-    <form class="query" action="#" th:action="@{/getPatient}" th:object="${patient}" method="get"  style="padding-left: 10px;">
+    <form class="query" action="#" th:action="@{/query1}" th:object="${patient}" method="get"  style="padding-left: 10px;">
         <p><input type="submit" value="List Patients"></p>
     </form>
 

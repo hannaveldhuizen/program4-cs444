@@ -110,18 +110,15 @@ public class QueryController {
 	
 	// QUERY 2 ////////////////////////////////////////////////////////////////
 	
-	//@GetMapping("/query2")
-    public String query2Form(Model model) {
-        model.addAttribute("department", new Department());
-        return "query2";
-    }
+
 	
-	//@PostMapping("/query2")
-    public String query2(@ModelAttribute Department department) {
-		String dep = department.getDeptName();
-		
-		String query = "select Doctor.firstname, Doctor.lastname, Department.officenum, buildingname from lshoemake.Doctor, lshoemake.Department ";
-		query += "where Doctor.DeptId=Department.DeptId and DeptName='" + dep + "'";
+	@GetMapping("/query2Results")
+    public String query2(@RequestParam(value = "search", required = true)
+    						String deptName, Model model) {
+
+		String query = "select Doctor.firstname, Doctor.lastname, Department.officenum, "
+				+ "buildingname from lshoemake.Doctor, lshoemake.Department "
+				+ "where Doctor.DeptId=Department.DeptId and DeptName='" + deptName + "'";
 		
 		List<String> allNames = this.jdbcTemplate.query(
         query,
@@ -136,7 +133,7 @@ public class QueryController {
             }
         });
 		
-        //model.addAttribute("names", allNames);	
+        model.addAttribute("search", allNames);	
 		
         return "/query2Results";
 	}
