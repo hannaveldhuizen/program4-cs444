@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,23 +40,21 @@ public class QueryController {
 	
 	// QUERY 1 ////////////////////////////////////////////////////////////////
 	
-	//@GetMapping("/query1")
-    public String query1Form(Model model) {
-        model.addAttribute("patient", new Patient());
-        return "query1";
-    }
+	@GetMapping("/query1Results")
+    public String query1(@RequestParam(value = "search", required = true)
+    						String firstName,@RequestParam(value = "search1", required = true) String lastName, 
+							@RequestParam(value = "search2", required = true) String DOB, Model model) {	
 	
-	//@PostMapping("/query1")
-    public String query1(@ModelAttribute Patient patient) {	
-	
-		String fname = patient.getFirstName();
-		String lname = patient.getLastName();
-		String DOB = patient.getDOB();
+		System.out.println("A");
+		String fname = firstName;
+		String lname = lastName;
+		String DoB = DOB;
 		
 		String query = "select Patient.pid, firstname, lastname, gender, DOB, initialHospDate, reason, treatmentMethod, did ";
 		query += "from lshoemake.Patient, lshoemake.RecordVisit, lshoemake.Appointment where RecordVisit.apptnum=Appointment.apptnum and ";
-		query += "Appointment.pid=Patient.pid and firstname='" + fname + "' and lastname='" + lname + "' and DOB='" + DOB + "'";
+		query += "Appointment.pid=Patient.pid and firstname='" + fname + "' and lastname='" + lname + "' and DOB='" + DoB + "'";
 		
+		System.out.println(query);
 		List<String> allNames = this.jdbcTemplate.query(
         query,
         new RowMapper<String>() {
@@ -102,15 +99,13 @@ public class QueryController {
 			retVal.add(allNames.get(maxIndex));
 		}
 		
-        //model.addAttribute("retVal", retVal);	
+        model.addAttribute("retVal", retVal);	
 		
         return "/query1Results";
     }
 	///////////////////////////////////////////////////////////////////////////
 	
 	// QUERY 2 ////////////////////////////////////////////////////////////////
-	
-
 	
 	@GetMapping("/query2Results")
     public String query2(@RequestParam(value = "search", required = true)
@@ -142,8 +137,9 @@ public class QueryController {
 	
 	// QUERY 3 ////////////////////////////////////////////////////////////////
 	
-	//@GetMapping("/query3")
+	@GetMapping("/query3Results")
     public String query3(Model model) {
+		System.out.println("C");
 		
 		String query1 = "select Patient.pid, firstname, lastname, initialHospDate, ExpDischargeDate, HospRoom from lshoemake.Patient, lshoemake.RecordVisit,";
 		query1 += " lshoemake.Appointment where RecordVisit.apptnum=Appointment.apptnum and Patient.pid=Appointment.pid";
@@ -224,7 +220,7 @@ public class QueryController {
 			}
 		}
 		
-        //model.addAttribute("retVal", retVal);	
+        model.addAttribute("retVal", retVal);	
 		
         return "/query3Results";
 	}
@@ -233,4 +229,30 @@ public class QueryController {
 	
 	// QUERY 4 ////////////////////////////////////////////////////////////////
 	
+	@GetMapping("/query4Results")
+    public String query4(Model model) {
+		System.out.println("D");
+		
+		String query1 = "select Patient.pid, Patient.firstName, Patient.lastName, eid, phid from ";
+		query1 += "lshoemake.Patient, lshoemake.Medicine, lshoemake.Pharmacist, lshoemake.Appointment, lshoemake.SupportStaff";
+		query1 += "where Patient.pid=Medicine.pid and Pharmacist.phid=Medicine.phid and Patient.pid=Appointment.pid and";
+		query1 += " SupportStaff.eid=Appointment.eid";
+		
+		List<String> retVal = this.jdbcTemplate.query(
+        query1,
+        new RowMapper<String>() {
+            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+				String pid = rs.getString("pid");
+                String first_name = rs.getString("firstname");
+				String last_name = rs.getString("lastname");
+				String eid = rs.getString("eid");
+				String phid = rs.getString("phid");
+                return (pid+","+first_name+","+last_name+","+eid+","+phid);
+            }
+        });
+		
+        model.addAttribute("retVal", retVal);	
+		
+        return "/query4Results";
+	}
 }
