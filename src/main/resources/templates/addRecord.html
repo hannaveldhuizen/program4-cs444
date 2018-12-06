@@ -21,7 +21,13 @@ This page handles adding new patient records to the Record table. Record number,
         <p>Date Checked In: <input type="date" th:field="*{initialHospDate}" required /></p>
         <p>Expected Discharge Date: <input type="date" th:field="*{expDischargeDate}" /></p>
         <p>Actual Discharge Date: <input type="date" th:field="*{actualDischargeDate}" /></p>
-        <p>Method of Treatment: <input type="text" th:field="*{treatmentMethod}" /></p>
+        <p>Method of Treatment: <select th:field="*{treatmentMethod}">
+            <option value=""></option>
+            <option value="surgical">Surgical</option>
+            <option value="medical">Medical</option>
+            <option value="physical therapy">Physical Therapy</option>
+        </select>
+        </p>
         <p>Doctor ID: <input type="text" th:field="*{DID}"/></p>
         <p>Room Number: <input type="text" th:field="*{hospRoom}"/></p>
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
