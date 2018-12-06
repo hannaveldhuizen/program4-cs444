@@ -70,40 +70,67 @@ public class QueryController {
 		String fname = firstName;	// firstName of patient
 		String lname = lastName;	// lastName of patient
 		String DoB = DOB;			// DOB of patient
-		
+		String pid = "";				// pid of patient
+		/*
 		String query = "select Patient.pid, firstname, lastname, gender, DOB, initialHospDate, reason, treatmentMethod, did ";
 		query += "from lshoemake.Patient, lshoemake.RecordVisit, lshoemake.Appointment where RecordVisit.apptnum=Appointment.apptnum and ";
 		query += "Appointment.pid=Patient.pid and firstname='" + fname + "' and lastname='" + lname + "' and DOB='" + DoB + "'";
+		*/
 		
-		List<String> allNames = this.jdbcTemplate.query(
-        query,
+		String query1 = "select pid, firstname, lastname, gender, DOB from lshoemake.Patient where firstName='" + fname;
+		query1 += "' and lastname='" + lname + "' and DOB='" + DoB + "'";
+		List<String> q1List = this.jdbcTemplate.query(
+        query1,
         new RowMapper<String>() {
             public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-                String pid = rs.getString("pid");
+                String PID = rs.getString("pid");
                 String first_name = rs.getString("firstname");
 				String last_name = rs.getString("lastname");
 				String gender = rs.getString("gender");
 				String dateOfBirth = rs.getString("DOB");
-				String iHP = rs.getString("initialHospDate");
-				String reason = rs.getString("reason");
-				String tMethod = rs.getString("treatmentMethod");
-				String did = rs.getString("did");
 				
-                return (pid+","+first_name+","+last_name+","+gender+","+dateOfBirth+","+iHP+","+reason+","+tMethod+","+did);
+                return (PID+","+first_name+","+last_name+","+gender+","+dateOfBirth);
             }
         });
+		// q1List has pid,fname,lname,gender,dob and should have 0 or 1 entries.
 		
-		// intial query returns list of patient's visits so must extract most recent using Java Date
+		String retVal = "";							// the String with the fields we want to return
+		if(q1List.size() == 0){
+			model.addAttribute("retVal", retVal);
+			return "/query1Results";
+		}
+		else{
+			retVal = q1List.get(0);
+			String parts[] = retVal.split(",");
+			pid = parts[0];
+		}
+
+		String query2 = "select initialhospdate, reason, did from lshoemake.recordvisit, lshoemake.appointment where ";
+		query2 += "recordvisit.apptnum=appointment.apptnum and pid='" + pid + "'";
+		List<String> q2List = this.jdbcTemplate.query(
+        query2,
+        new RowMapper<String>() {
+            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+                String initHospDate = rs.getString("initialHospDate");
+				String reason = rs.getString("reason");
+				String did = rs.getString("did");
+				
+                return (initHospDate+","+reason+","+did);
+            }
+        });
+		// q2List has list of initHospDate, reason, did for this patient
+		
+		// query2 returns list of patient's visits so must extract most recent using Java Date
 		
 		int maxIndex = 0;											// index in allNames where initialHospDate is most in future
 		Date maxDate = null;										// the most future date
 		Date curDate = null;										// the current date to compare with maxDate
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");	// to convert dateStrings to Date objects
 		
-		for(int i = 0; i < allNames.size(); i++){
-			String[] parts = allNames.get(i).split(",");
+		for(int i = 0; i < q2List.size(); i++){
+			String[] parts = q2List.get(i).split(",");
 			try {
-				curDate = sdf.parse(parts[5]);
+				curDate = sdf.parse(parts[0]);
 			} catch (ParseException e1) {
 				e1.printStackTrace();
 			}
@@ -116,11 +143,14 @@ public class QueryController {
 				maxIndex = i;
 			}
 		}
-	
-		String retVal = "";						// the String with the fields we want to return		
-		if(allNames.size() != 0){
-			retVal += allNames.get(maxIndex);
+								
+		if(q2List.size() != 0){
+			retVal += "," + q2List.get(maxIndex);
 		}
+		else{
+			retVal += ",null,null,null";
+		}
+		
         model.addAttribute("retVal", retVal);	
 		
         return "/query1Results";
@@ -192,30 +222,40 @@ public class QueryController {
             }
         });
 		// q1List gives list with patients currently hospitalized meaning actualDischargeDate is null
+		for(int i = 0; i < q1List.size(); i++){
+			System.out.println(q1List.get(i));
+		}
 		
-		String query2 = "select Patient.pid, amountdue from lshoemake.Patient, lshoemake.Payment where Patient.pid=Payment.pid and status='NOT PAID'";
+		String query2 = "select Patient.pid, amountdue from lshoemake.Patient, lshoemake.Payment where Patient.pid=Payment.pid and status='Not paid'";
 		System.out.println(query2);
 		List<String> q2List = this.jdbcTemplate.query(
 		query2,
 		new RowMapper<String>() {
             public String mapRow(ResultSet rs, int rowNum) throws SQLException {
 				String pid = rs.getString("pid");
-                String amount = rs.getString("amount");
+                String amount = rs.getString("amountdue");
                 return (pid+","+amount);
             }
         });
 		//q2List gives list with PIDS and amounts due.
 		
 		// fill staying5Days list with patients from q1List if they staying >=5 days
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");	// used to convert Stringdate to Date
-		Date initial = null;										// initial hospital date
-		Date depart = null;											// expected departure date
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");		// used to convert Stringdate to Date
+		SimpleDateFormat dashes = new SimpleDateFormat("yyyy-MM-dd");	// used to convert Stringdate to date
+		Date initial = null;											// initial hospital date
+		Date depart = null;												// expected departure date
 		List<String> staying5Days = new ArrayList<String>();
 		for(int i = 0; i < q1List.size(); i++){
 			String[] parts = q1List.get(i).split(",");
 			try{
-				initial = sdf.parse(parts[3]);
-				depart = sdf.parse(parts[4]);
+				if(parts[3].indexOf('-') == -1){
+					initial = sdf.parse(parts[3]);
+					depart = sdf.parse(parts[4]);
+				}
+				else{
+					initial = dashes.parse(parts[3]);
+					depart = dashes.parse(parts[4]);
+				}
 			}
 			catch(ParseException e){
 				e.printStackTrace();
@@ -237,7 +277,8 @@ public class QueryController {
 			for(int j = 0; j < q2List.size(); j++){
 				String[] partsQ2 = q2List.get(j).split(",");
 				if(parts[0].equals(partsQ2[0])){
-					curSum += Float.parseFloat(partsQ2[1]);
+					String amt = partsQ2[1].replace("$", "");
+					curSum += Float.parseFloat(amt);
 				}
 			}
 			if(curSum > 0.0){
