@@ -99,7 +99,7 @@ public class PharmacistController {
     |  Parameters:
     |      @ModelAttribute Pharmacist pharmacist from pharmacistFormUpdate
     |
-    |  Returns:  String "resultPharmacist"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/addPharmacist")
     public String pharmacistSubmit(@ModelAttribute Pharmacist pharmacist) {
@@ -152,7 +152,7 @@ public class PharmacistController {
     |  Parameters:
     |      @ModelAttribute Pharmacist pharmacist from pharmacistFormDelete
     |
-    |  Returns:  String "deletePharmacistResult"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/deletePharmacist")
     public String pharmacistDelete(@ModelAttribute Pharmacist pharmacist) {
@@ -209,7 +209,7 @@ public class PharmacistController {
     |  Parameters:
     |      @ModelAttribute Pharmacist pharmacist from pharmacistFormUpdate
     |
-    |  Returns:  String "updatePharmacistResult"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/updatePharmacist")
     public String pharmacistUpdate(@ModelAttribute Pharmacist pharmacist) {

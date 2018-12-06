@@ -99,7 +99,7 @@ public class RecordController {
     |  Parameters:
     |      @ModelAttribute Record record from recordForm
     |
-    |  Returns:  String "resultRecord"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/addRecord")
     public String recordSubmit(@ModelAttribute Record record) {
@@ -154,7 +154,7 @@ public class RecordController {
     |  Parameters:
     |      @ModelAttribute Record record from recordFormUpdate
     |
-    |  Returns:  String "updateRecordResult"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/updateRecord")
     public String recordUpdate(@ModelAttribute Record record) {

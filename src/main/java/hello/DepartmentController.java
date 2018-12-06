@@ -99,7 +99,7 @@ public class DepartmentController {
     |  Parameters:
     |      @ModelAttribute Department department from departmentFormUpdate
     |
-    |  Returns:  String "updateDepartmentResult"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/updateDepartment")
     public String departmentUpdate(@ModelAttribute Department department) {

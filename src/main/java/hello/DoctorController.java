@@ -95,7 +95,7 @@ public class DoctorController {
     |  Parameters:
     |      @ModelAttribute Doctor doctor from doctorForm
     |
-    |  Returns:  String "resultDoctor"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/addDoctor")
     public String doctorSubmit(@ModelAttribute Doctor doctor) {
@@ -146,7 +146,7 @@ public class DoctorController {
     |  Parameters:
     |      @ModelAttribute Doctor doctor from doctorFormDelete
     |
-    |  Returns:  String "deleteDoctorResult"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/deleteDoctor")
     public String doctorDelete(@ModelAttribute Doctor doctor) {
@@ -203,7 +203,7 @@ public class DoctorController {
     |  Parameters:
     |      @ModelAttribute Doctor doctor from doctorFormUpdate
     |
-    |  Returns:  String "updateDoctorResult"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/updateDoctor")
     public String doctorUpdate(@ModelAttribute Doctor doctor) {

@@ -99,7 +99,7 @@ public class PaymentController {
     |  Parameters:
     |      @ModelAttribute Payment payment from paymentForm
     |
-    |  Returns:  String "resultPayment"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/addPayment")
     public String paymentSubmit(@ModelAttribute Payment payment) {
@@ -150,7 +150,7 @@ public class PaymentController {
     |  Parameters:
     |      @ModelAttribute Payment payment from paymentFormUpdate
     |
-    |  Returns:  String "updatePaymentResult"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/updatePayment")
     public String paymentUpdate(@ModelAttribute Payment payment) {

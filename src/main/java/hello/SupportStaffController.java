@@ -100,7 +100,7 @@ public class SupportStaffController {
     |  Parameters:
     |      @ModelAttribute Staff staff from staffForm
     |
-    |  Returns:  String "resultStaff"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/addStaff")
     public String staffSubmit(@ModelAttribute SupportStaff staff) {
@@ -154,7 +154,7 @@ public class SupportStaffController {
     |  Parameters:
     |      @ModelAttribute Staff staff from staffFormDelete
     |
-    |  Returns:  String "deleteStaffResult"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/deleteStaff")
     public String staffDelete(@ModelAttribute SupportStaff staff) {
@@ -212,7 +212,7 @@ public class SupportStaffController {
     |  Parameters:
     |      @ModelAttribute Staff staff from staffFormUpdate
     |
-    |  Returns:  String "updateStaffResult"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/updateStaff")
     public String staffUpdate(@ModelAttribute SupportStaff staff) {

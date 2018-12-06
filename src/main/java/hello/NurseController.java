@@ -100,7 +100,7 @@ public class NurseController {
     |  Parameters:
     |      @ModelAttribute Nurse nurse from nurseForm
     |
-    |  Returns:  String "resultNurse"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/addNurse")
     public String nurseSubmit(@ModelAttribute Nurse nurse) {
@@ -151,7 +151,7 @@ public class NurseController {
     |  Parameters:
     |      @ModelAttribute Nurse nurse from nurseFormDelete
     |
-    |  Returns:  String "deleteNurseResult"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/deleteNurse")
     public String nurseDelete(@ModelAttribute Nurse nurse) {
@@ -208,7 +208,7 @@ public class NurseController {
     |  Parameters:
     |      @ModelAttribute Nurse nurse from nurseFormUpdate
     |
-    |  Returns:  String "updateNurseResult"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/updateNurse")
     public String nurseUpdate(@ModelAttribute Nurse nurse) {

@@ -100,7 +100,7 @@ public class PatientController {
     |  Parameters:
     |      @ModelAttribute Patient patient from patientForm
     |
-    |  Returns:  String "resultPatient"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/addPatient")
     public String patientSubmit(@ModelAttribute Patient patient) {
@@ -153,7 +153,7 @@ public class PatientController {
     |  Parameters:
     |      @ModelAttribute Patient patient from patientFormDelete
     |
-    |  Returns:  String "deletePatientResult"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/deletePatient")
     public String patientDelete(@ModelAttribute Patient patient) {
@@ -210,7 +210,7 @@ public class PatientController {
     |  Parameters:
     |      @ModelAttribute Patient patient from patientFormUpdate
     |
-    |  Returns:  String "updatePatientResult"
+    |  Returns:  String "success"
     *-------------------------------------------------------------------*/
     @PostMapping("/updatePatient")
     public String patientUpdate(@ModelAttribute Patient patient) {
