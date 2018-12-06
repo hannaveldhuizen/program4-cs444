@@ -104,7 +104,7 @@ public class DoctorController {
         		doctor.getDOB(), doctor.getStatus().equals("") ? null : doctor.getStatus(), 
         		doctor.getDeptID() == 0 ? null : doctor.getDeptID(),
         		doctor.getOfficeNumber() == 0 ? null : doctor.getOfficeNumber());
-        return "resultDoctor";
+        return "success";
     }
 
     /*---------------------------------------------------------------------
@@ -161,7 +161,7 @@ public class DoctorController {
     	
     	jdbcTemplate.update("delete from lshoemake.doctor where " + String.join(" and ", strs));
 
-      return "deleteDoctorResult";
+      return "success";
     }
     
     /*---------------------------------------------------------------------
@@ -225,7 +225,7 @@ public class DoctorController {
         				String.join(", ", strs), doctor.getDID());
         jdbcTemplate.update(stmt);
 
-        return "updateDoctorResult";
+        return "success";
     }
 
 }

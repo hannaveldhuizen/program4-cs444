@@ -116,7 +116,7 @@ public class DepartmentController {
     	String stmt = String.format("update lshoemake.department set %s where deptid = %s",
         				String.join(", ", strs), department.getDeptID());
         jdbcTemplate.update(stmt);
-        return "updateDepartmentResult";
+        return "success";
     }
 
 }

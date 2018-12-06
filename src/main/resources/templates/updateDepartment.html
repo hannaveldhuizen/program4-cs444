@@ -17,7 +17,7 @@ will be updated.
 <body>
 <div class="content" style="padding-left:15px">
     <h1>Updating a Department</h1>
-    <form action="#" th:action="@{/updateDepartment}" th:object="${department}" method="put">
+    <form action="#" th:action="@{/updateDepartment}" th:object="${department}" method="post">
         <p><b>Enter the ID for the record you wish to update: </b></p>
         <p>ID: <input type="text" th:field="*{deptID}" required/></p>
         <p><b>Enter new values below:</b></p>

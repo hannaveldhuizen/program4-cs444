@@ -110,7 +110,7 @@ public class PharmacistController {
         		pharmacist.getDeptID() == 0 ? null : pharmacist.getDeptID(), 
         		pharmacist.getOfficeNumber() == 0 ? null : pharmacist.getOfficeNumber());
 
-        return "resultPharmacist";
+        return "success";
     }
 
     /*---------------------------------------------------------------------
@@ -167,7 +167,7 @@ public class PharmacistController {
     	
     	jdbcTemplate.update("delete from lshoemake.pharmacist where " + String.join(" and ", strs));
 
-      return "deletePharmacistResult";
+      return "success";
     }
     
     /*---------------------------------------------------------------------
@@ -229,7 +229,7 @@ public class PharmacistController {
     					String.join(", ", strs), pharmacist.getPhID());
 
     	jdbcTemplate.update(stmt);
-        return "updatePharmacistResult";
+        return "success";
     }
 
 }

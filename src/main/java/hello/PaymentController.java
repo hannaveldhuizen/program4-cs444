@@ -108,7 +108,7 @@ public class PaymentController {
         		payment.getDueDate(), payment.getStatus(), payment.getPaymentDate(),
         		payment.getEID());
 
-        return "resultPayment";
+        return "success";
     }
 
     /*---------------------------------------------------------------------
@@ -172,7 +172,7 @@ public class PaymentController {
     					String.join(", ", strs), payment.getPayID());
         jdbcTemplate.update(stmt);
         
-        return "updatePaymentResult";
+        return "success";
     }
 
 }

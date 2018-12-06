@@ -24,10 +24,6 @@ This page handles adding new records to the Payment table. Only the payment date
         <p>EID: <input type="text" th:field="*{EID}" required/></p>
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
     </form>
-
-    <h1>Result</h1>
-    <p>Payment Added: </p>
-    <p th:text="'id: ' + ${payment.payID}" />
 </div>
 </body>
 </html>

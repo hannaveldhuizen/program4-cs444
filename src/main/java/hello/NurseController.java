@@ -109,7 +109,7 @@ public class NurseController {
         		nurse.getNID(), nurse.getLastName(), nurse.getFirstName(), nurse.getDOB(), 
         		nurse.getDeptID() == 0 ? null : nurse.getDeptID(), 
         		nurse.getRoomNumber() == 0 ? null : nurse.getRoomNumber());
-        return "resultNurse";
+        return "success";
     }
 
     /*---------------------------------------------------------------------
@@ -166,7 +166,7 @@ public class NurseController {
     	
     	jdbcTemplate.update("delete from lshoemake.nurse where " + String.join(" and ", strs));
 
-      return "deleteNurseResult";
+      return "success";
     }
     
     /*---------------------------------------------------------------------
@@ -228,7 +228,7 @@ public class NurseController {
         				String.join(", ", strs), nurse.getNID());
         jdbcTemplate.update(stmt);
 
-        return "updateNurseResult";
+        return "success";
     }
 
 }

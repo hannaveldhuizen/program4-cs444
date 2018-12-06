@@ -24,11 +24,6 @@ last name, and DOB cannot be left blank in order to submit this form.
     <p>Room Number: <input type="text" th:field="*{roomNumber}"/></p>
     <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
 </form>
-    <h1>Result</h1>
-    <p>Nurse Added:</p>
-    <p th:text="'id: ' + ${nurse.NID}" />
-    <p th:text="'First Name: ' + ${nurse.firstName}" />
-    <p th:text="'Last Name: ' + ${nurse.lastName}" />
 </div>
 </body>
 </html>

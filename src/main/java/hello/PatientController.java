@@ -111,7 +111,7 @@ public class PatientController {
         	patient.getDOB(), patient.getAddress(),
         	patient.getContactNumber());
 
-        return "resultPatient";
+        return "success";
     }
 
     /*---------------------------------------------------------------------
@@ -168,7 +168,7 @@ public class PatientController {
     	
     	jdbcTemplate.update("delete from lshoemake.patient where " + String.join(" and ", strs));
 
-      return "deletePatientResult";
+      return "success";
     }
     
     /*---------------------------------------------------------------------
@@ -232,7 +232,7 @@ public class PatientController {
     			String.join(", ", strs), patient.getPID());
         jdbcTemplate.update(stmt);
 
-        return "updatePatientResult";
+        return "success";
     }
 
 }

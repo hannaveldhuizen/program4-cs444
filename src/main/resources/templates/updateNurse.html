@@ -17,7 +17,7 @@ will be updated.
 <body>
 <div id="content" style="padding-left:15px">
     <h1>Updating a Nurse</h1>
-    <form action="#" th:action="@{/updateNurse}" th:object="${nurse}" method="put">
+    <form action="#" th:action="@{/updateNurse}" th:object="${nurse}" method="post">
         <!-- the ID will be used to locate the record to update, cannot be changed -->
         <p><b>Enter the ID for the record you wish to update: </b></p>
         <p>ID: <input type="text" th:field="*{NID}" /></p>

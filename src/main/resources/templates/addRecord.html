@@ -26,12 +26,6 @@ This page handles adding new patient records to the Record table. Record number,
         <p>Room Number: <input type="text" th:field="*{hospRoom}"/></p>
         <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
     </form>
-
-    <h1>Result</h1>
-    <p>Record Added: </p>
-    <p th:text="'id: ' + ${record.recordNum}" />
-    <p th:text="'Appointment Number: ' + ${record.apptNum}" />
-    <p th:text="'Reason: ' + ${record.reason}" />
 </div>
 </body>
 </html>

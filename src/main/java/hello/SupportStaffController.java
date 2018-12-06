@@ -112,7 +112,7 @@ public class SupportStaffController {
         		staff.getGender().equals("") ? null : staff.getGender(), 
         		staff.getContactNumber());
 
-        return "resultStaff";
+        return "success";
     }
 
     /*---------------------------------------------------------------------
@@ -170,7 +170,7 @@ public class SupportStaffController {
     	jdbcTemplate.update("delete from lshoemake.supportstaff where " + String.join(" and ", strs));
 
 
-      return "deleteStaffResult";
+      return "success";
     }
     
     /*---------------------------------------------------------------------
@@ -238,7 +238,7 @@ public class SupportStaffController {
     			String.join(", ", strs), staff.getEID());
         jdbcTemplate.update(stmt);
 
-        return "updateStaffResult";
+        return "success";
     }
    
 

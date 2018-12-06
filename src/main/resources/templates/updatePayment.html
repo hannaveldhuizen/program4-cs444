@@ -17,7 +17,7 @@ will be updated.
 <body>
 <div class="content" style="padding-left:15px">
     <h1>Updating a Payment</h1>
-    <form action="#" th:action="@{/updatePayment}" th:object="${payment}" method="put">
+    <form action="#" th:action="@{/updatePayment}" th:object="${payment}" method="post">
         <p><b>Enter the ID for the record you wish to update: </b></p>
         <p>Payment ID: <input type="text" th:field="*{payID}" required /></p>
         <p><b>Enter new values below:</b></p>

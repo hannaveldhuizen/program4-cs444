@@ -112,7 +112,7 @@ public class RecordController {
         		record.getHospRoom() == 0 ? null : record.getHospRoom(),
         		record.getDID() == 0 ? null : record.getDID());
         
-        return "resultRecord";
+        return "success";
     }
 
     /*---------------------------------------------------------------------
@@ -178,7 +178,7 @@ public class RecordController {
     			String.join(", ", strs), record.getRecordNum());
         jdbcTemplate.update(stmt);
         
-        return "updateRecordResult";
+        return "success";
     }
 
 }
